@@ -5,6 +5,6 @@ module lk.ijse.studentmanagementsystem {
     requires org.hibernate.orm.core;
 
 
-    opens lk.ijse.studentmanagementsystem to javafx.fxml;
+    opens lk.ijse.studentmanagementsystem.controller to javafx.fxml;
     exports lk.ijse.studentmanagementsystem;
 }
