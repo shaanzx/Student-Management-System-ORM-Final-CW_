@@ -1,14 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="lk.ijse.studentmanagementsystem.controller.RegisterFormController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="ancRegister" prefHeight="650.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.studentmanagementsystem.controller.RegisterFormController">
+   <children>
+      <Pane layoutX="61.0" prefHeight="650.0" prefWidth="525.0">
+         <rotationAxis>
+            <Point3D z="20.0" />
+         </rotationAxis>
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="80.0" prefHeight="50.0" prefWidth="459.0" text="CULINARY MANAGEMNET SYSTEM">
+               <font>
+                  <Font name="Impact" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="45.0" layoutY="160.0" prefHeight="50.0" prefWidth="459.0" text="User Name">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUserName" layoutX="40.0" layoutY="214.0" onAction="#txtUserNameOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your User Name">
+               <font>
+                  <Font name="Impact" size="14.0" />
+               </font>
+            </TextField>
+            <Label layoutX="45.0" layoutY="430.0" prefHeight="50.0" prefWidth="459.0" text="Password">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="txtPassword" layoutX="43.0" layoutY="479.0" onAction="#txtPasswordOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your Password">
+               <font>
+                  <Font name="Impact" size="14.0" />
+               </font>
+            </PasswordField>
+            <JFXButton fx:id="btnSignIn" buttonType="RAISED" layoutX="288.0" layoutY="535.0" onAction="#btnSignInOnAction" prefHeight="55.0" prefWidth="102.0" ripplerFill="#f8f8f8" style="-fx-background-color: black; -fx-font-size: 24; -fx-font-family: impact; -fx-alignment: center; -fx-background-radius: 60; -fx-text-fill: white;" text="Sign In" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnRegister" buttonType="RAISED" layoutX="127.0" layoutY="535.0" onAction="#btnRegisterOnAction" prefHeight="55.0" prefWidth="118.0" ripplerFill="#f8f8f8" style="-fx-background-color: black; -fx-font-size: 24; -fx-font-family: impact; -fx-alignment: center; -fx-background-radius: 50; -fx-text-fill: white;" text="Register" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+            </JFXButton>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="195.0" layoutY="603.0" text="If Register done? &quot;Sign In&quot;">
+               <font>
+                  <Font name="Impact" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="45.0" layoutY="250.0" prefHeight="50.0" prefWidth="459.0" text="Email">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUserEmail" layoutX="40.0" layoutY="304.0" onAction="#txtUserEmailOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your Email">
+               <font>
+                  <Font name="Impact" size="14.0" />
+               </font>
+            </TextField>
+            <Label layoutX="45.0" layoutY="340.0" prefHeight="50.0" prefWidth="459.0" text="Mobile No">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUserMobileNo" layoutX="40.0" layoutY="394.0" onAction="#txtUserMobileNoOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your Mobile No">
+               <font>
+                  <Font name="Impact" size="14.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <ImageView fitHeight="650.0" fitWidth="600.0" layoutX="500.0">
+         <image>
+            <Image url="@../assests/image/Register-form.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>
