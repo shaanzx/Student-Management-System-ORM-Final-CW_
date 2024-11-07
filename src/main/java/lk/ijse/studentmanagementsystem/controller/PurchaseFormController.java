@@ -1,4 +1,4 @@
 package lk.ijse.studentmanagementsystem.controller;
 
-public class ProgrammeFormController {
+public class PurchaseFormController {
 }

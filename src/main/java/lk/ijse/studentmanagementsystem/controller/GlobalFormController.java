@@ -2,9 +2,23 @@ package lk.ijse.studentmanagementsystem.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import lk.ijse.studentmanagementsystem.util.Navigation;
 
-public class GlobalFormController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class GlobalFormController implements Initializable {
+
+    @FXML
+    private BorderPane mainPane;
+
+    @FXML
+    private Pane paginPane;
 
     @FXML
     private Button btnCourse;
@@ -21,29 +35,55 @@ public class GlobalFormController {
     @FXML
     private Button btnStudents;
 
-    @FXML
-    void btnCousrseOnAction(ActionEvent event) {
+    private final String activeStyle = "-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 16px; -fx-alignment: CENTER; -fx-padding: 10; -fx-font-family: impact;";
+    private final String inactiveStyle = "-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 16px; -fx-alignment: CENTER; -fx-padding: 10; -fx-font-family: impact;";
 
+    @FXML
+    void btnHomeOnAction(ActionEvent event) throws IOException {
+        Navigation.switchPaging(paginPane, "dashboard-form.fxml");
+        updateButtonStyles(btnHome);
     }
 
     @FXML
-    void btnHomeOnAction(ActionEvent event) {
-
+    void btnStudentsOnAction(ActionEvent event) throws IOException {
+        Navigation.switchPaging(paginPane,"student-form.fxml");
+        updateButtonStyles(btnStudents);
     }
 
     @FXML
-    void btnLogoutOnAction(ActionEvent event) {
-
+    void btnCourseOnAction(ActionEvent event) throws IOException {
+        Navigation.switchPaging(paginPane,"courses-form.fxml");
+        updateButtonStyles(btnCourse);
     }
 
     @FXML
     void btnPurchaseOnAction(ActionEvent event) {
-
+        updateButtonStyles(btnPurchase);
     }
 
     @FXML
-    void btnStudentsOnAction(ActionEvent event) {
-
+    void btnLogoutOnAction(ActionEvent event) throws IOException {
+        updateButtonStyles(btnLogout);
+        Navigation.switchToPage( "login-form.fxml",mainPane);
     }
 
+    private void updateButtonStyles(Button activeButton) {
+        btnHome.setStyle(inactiveStyle);
+        btnStudents.setStyle(inactiveStyle);
+        btnCourse.setStyle(inactiveStyle);
+        btnPurchase.setStyle(inactiveStyle);
+        btnLogout.setStyle(inactiveStyle);
+        activeButton.setStyle(activeStyle);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        paginPane.setVisible(true);
+        try {
+            Navigation.switchPaging(paginPane, "dashboard-form.fxml");
+            updateButtonStyles(btnHome);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -4,6 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -15,6 +17,17 @@ public class Navigation {
     private static Stage stage;
 
     public static void switchNavigation(String path, AnchorPane event) throws IOException {
+        rootNode = FXMLLoader.load(Navigation.class.getResource("/view/" + path));
+        stage = (Stage) event.getScene().getWindow();
+
+        scene = new Scene(rootNode);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    public static void switchToPage(String path, BorderPane event) throws IOException {
         rootNode = FXMLLoader.load(Navigation.class.getResource("/view/" + path));
         stage = (Stage) event.getScene().getWindow();
 

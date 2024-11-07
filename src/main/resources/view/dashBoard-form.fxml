@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="650" prefWidth="830" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="lk.ijse.studentmanagementsystem.controller.DashBoardFormController">
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane>
+            <!-- Home Dashboard -->
+            <VBox fx:id="homeDashboard" spacing="20" style="-fx-padding: 20;">
+                <HBox spacing="20">
+                    <VBox alignment="CENTER" style="-fx-background-color: #f0f0f0; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 18px; -fx-font-family: impact;" text="Total Students"/>
+                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-font-family: impact;" text="1,234"/>
+                    </VBox>
+                    <VBox alignment="CENTER" style="-fx-background-color: #f0f0f0; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 18px; -fx-font-family: impact;" text="Active Programmes"/>
+                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-font-family: impact;" text="15"/>
+                    </VBox>
+                    <VBox alignment="CENTER" style="-fx-background-color: #f0f0f0; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 18px; -fx-font-family: impact;" text="Total Revenue"/>
+                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-font-family: impact;" text="50,000"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="20">
+                    <VBox style="-fx-background-color: #f0f0f0; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label alignment="CENTER" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: impact;" text="Student Enrollment Trend"/>
+                        <LineChart>
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </VBox>
+                    <VBox style="-fx-background-color: #f0f0f0; -fx-padding: 20; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: impact;" text="Programme Distribution"/>
+                        <PieChart/>
+                    </VBox>
+                </HBox>
+
+                <TableView>
+                    <columns>
+                        <TableColumn text="Recent Activities"/>
+                        <TableColumn text="Date"/>
+                        <TableColumn text="Status"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+        </StackPane>
+    </center>
+
+</BorderPane>
