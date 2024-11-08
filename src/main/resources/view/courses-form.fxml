@@ -20,7 +20,7 @@
 
 <StackPane prefHeight="650" prefWidth="830" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.studentmanagementsystem.controller.CoursesFormController">
 
-    <VBox spacing="20" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 15;">
+    <VBox spacing="20" style="-fx-background-color: white; -fx-padding: 30;">
         <effect>
             <DropShadow color="#00000033" radius="15" spread="0.1" />
         </effect>
@@ -66,12 +66,12 @@
                 </effect>
             </TextArea>
 
-            <TextField fx:id="courseDurationField" promptText="Course Duration" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <TextField fx:id="courseDurationField" alignment="CENTER_RIGHT" promptText="Course Duration" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" text="Month" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
                 <effect>
                     <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                 </effect>
             </TextField>
-            <TextField fx:id="courseFeeField" promptText="Course Fee" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" text="Rs.   .00" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <TextField fx:id="courseFeeField" promptText="Course Fee" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" text="Rs." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
                 <effect>
                     <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                 </effect>

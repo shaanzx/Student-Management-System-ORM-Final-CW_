@@ -87,6 +87,7 @@ public class CoursesFormController {
         courseFeeField.clear();
         courseDurationField.clear();
         courseFeeField.setText("Rs.");
+        courseDurationField.setText("Month");
     }
 
     @FXML

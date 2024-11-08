@@ -20,7 +20,7 @@
 
 <StackPane prefHeight="650" prefWidth="830" style="-fx-background-color: #f5f5f5;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="lk.ijse.studentmanagementsystem.controller.StudentFormController">
 
-    <VBox spacing="20" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
+    <VBox spacing="20" style="-fx-background-color: white; -fx-padding: 30;">
         <effect>
             <DropShadow color="#00000022" radius="10" spread="0.1" />
         </effect>
