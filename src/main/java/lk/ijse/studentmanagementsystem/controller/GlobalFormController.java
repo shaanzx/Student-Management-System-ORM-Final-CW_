@@ -57,7 +57,8 @@ public class GlobalFormController implements Initializable {
     }
 
     @FXML
-    void btnPurchaseOnAction(ActionEvent event) {
+    void btnPurchaseOnAction(ActionEvent event) throws IOException {
+        Navigation.switchPaging(paginPane,"purchase-form.fxml");
         updateButtonStyles(btnPurchase);
     }
 
