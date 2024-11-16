@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -18,7 +19,7 @@
             <Point3D z="20.0" />
          </rotationAxis>
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="80.0" prefHeight="50.0" prefWidth="459.0" text="CULINARY MANAGEMNET SYSTEM">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="20.0" prefHeight="50.0" prefWidth="459.0" text="CULINARY MANAGEMNET SYSTEM">
                <font>
                   <Font name="Impact" size="36.0" />
                </font>
@@ -28,7 +29,7 @@
                   <Font name="Impact" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtUserName" layoutX="40.0" layoutY="214.0" onAction="#txtUserNameOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your User Name">
+            <TextField fx:id="txtUserName" layoutX="40.0" layoutY="214.0" onAction="#txtUserNameOnAction" prefHeight="26.0" prefWidth="426.0" promptText="Enter Your User Name">
                <font>
                   <Font name="Impact" size="14.0" />
                </font>
@@ -78,6 +79,22 @@
                   <Font name="Impact" size="14.0" />
                </font>
             </TextField>
+            <Label layoutX="45.0" layoutY="70.0" prefHeight="50.0" prefWidth="459.0" text="User ID">
+               <font>
+                  <Font name="Impact" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUserId" layoutX="40.0" layoutY="124.0" onAction="#txtUserIdOnAction" prefHeight="27.0" prefWidth="255.0" promptText="Enter Your User ID">
+               <font>
+                  <Font name="Impact" size="14.0" />
+               </font>
+            </TextField>
+            <ComboBox fx:id="cmbJobRole" layoutX="310.0" layoutY="124.0" onAction="#cmbJobRoleOnAction" prefHeight="27.0" prefWidth="155.0" promptText="Select Job Role">
+               <style>
+                  -fx-font-family: "Impact";
+                  -fx-font-size: 14px;
+               </style>
+            </ComboBox>
          </children>
       </Pane>
       <ImageView fitHeight="650.0" fitWidth="600.0" layoutX="500.0">

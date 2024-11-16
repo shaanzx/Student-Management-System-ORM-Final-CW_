@@ -78,11 +78,6 @@ public class PurchaseFormController {
     private Label timeLabel;
 
     public void initialize() {
-
-        // Set up table columns
-        // ...
-
-        // Set up time display
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalTime currentTime = LocalTime.now();
             timeLabel.setText(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));

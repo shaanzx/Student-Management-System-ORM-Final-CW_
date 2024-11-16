@@ -6,10 +6,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.studentmanagementsystem.dto.UserDTO;
 
 import java.io.IOException;
 
@@ -26,10 +28,16 @@ public class RegisterFormController {
     private JFXButton btnSignIn;
 
     @FXML
+    private ComboBox<?> cmbJobRole;
+
+    @FXML
     private PasswordField txtPassword;
 
     @FXML
     private TextField txtUserEmail;
+
+    @FXML
+    private TextField txtUserId;
 
     @FXML
     private TextField txtUserMobileNo;
@@ -40,6 +48,13 @@ public class RegisterFormController {
     @FXML
     void btnRegisterOnAction(ActionEvent event) {
         btnSignIn.requestFocus();
+        String userName = txtUserName.getText();
+        String userEmail = txtUserEmail.getText();
+        String userMobileNo = txtUserMobileNo.getText();
+        String password = txtPassword.getText();
+
+        UserDTO userDTO = new UserDTO(userName, userEmail, userMobileNo, password);
+
     }
 
     @FXML
@@ -76,4 +91,13 @@ public class RegisterFormController {
         txtUserEmail.requestFocus();
     }
 
+    @FXML
+    void txtUserIdOnAction(ActionEvent event) {
+        cmbJobRole.requestFocus();
+    }
+
+    @FXML
+    void cmbJobRoleOnAction(ActionEvent event) {
+        txtUserName.requestFocus();
+    }
 }
