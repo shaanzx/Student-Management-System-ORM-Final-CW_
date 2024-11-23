@@ -2,11 +2,13 @@ package lk.ijse.studentmanagementsystem.controller;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.TranslateTransition;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -14,6 +16,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.studentmanagementsystem.dto.UserDTO;
+import lk.ijse.studentmanagementsystem.entity.User;
+import lk.ijse.studentmanagementsystem.service.BOFactory;
+import lk.ijse.studentmanagementsystem.service.custom.UserBO;
 
 import java.io.IOException;
 
@@ -30,7 +35,7 @@ public class RegisterFormController {
     private JFXButton btnSignIn;
 
     @FXML
-    private ComboBox<?> cmbJobRole;
+    private ComboBox<String> cmbJobRole;
 
     @FXML
     private PasswordField txtPassword;
@@ -47,16 +52,35 @@ public class RegisterFormController {
     @FXML
     private TextField txtUserName;
 
+    UserBO userBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.USER);
+
+
+    public void initialize() {
+        cmbJobRole.getItems().addAll("Admin", "User");
+    }
+
     @FXML
     void btnRegisterOnAction(ActionEvent event) {
         btnSignIn.requestFocus();
-        String userName = txtUserName.getText();
-        String userEmail = txtUserEmail.getText();
-        String userMobileNo = txtUserMobileNo.getText();
-        String password = txtPassword.getText();
 
-        UserDTO userDTO = new UserDTO(userName, userEmail, userMobileNo, password);
+        UserDTO user = new UserDTO(
+                txtUserId.getText(),
+                cmbJobRole.getValue(),
+                txtUserName.getText(),
+                txtUserEmail.getText(),
+                txtUserMobileNo.getText(),
+                txtPassword.getText()
+        );
 
+        try {
+            if(userBo.saveUser(user)){
+                new Alert(Alert.AlertType.INFORMATION, "User saved successfully").show();
+            }else{
+                new Alert(Alert.AlertType.ERROR, "User not saved").show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

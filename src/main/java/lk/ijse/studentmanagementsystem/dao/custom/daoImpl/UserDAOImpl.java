@@ -1,21 +1,19 @@
 package lk.ijse.studentmanagementsystem.dao.custom.daoImpl;
 
 import lk.ijse.studentmanagementsystem.config.SessionFactoryConfig;
-import lk.ijse.studentmanagementsystem.dao.custom.StudentDAO;
-import lk.ijse.studentmanagementsystem.entity.Student;
+import lk.ijse.studentmanagementsystem.dao.custom.UserDAO;
+import lk.ijse.studentmanagementsystem.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 
-public class StudentDAOImpl implements StudentDAO {
-    private Session session;
-
+public class UserDAOImpl implements UserDAO {
     @Override
-    public boolean save(Student student) throws Exception {
+    public boolean save(User user) throws Exception {
         try(Session session = SessionFactoryConfig.getInstance().getSession()){
             Transaction transaction = session.beginTransaction();
-            session.save(student);
+            session.save(user);
             transaction.commit();
             return true;
         }catch (Exception e){
@@ -25,7 +23,7 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public boolean update(Student entity) throws Exception {
+    public boolean update(User entity) throws Exception {
         return false;
     }
 
@@ -35,12 +33,12 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public Student search(String id) throws Exception {
+    public User search(String id) throws Exception {
         return null;
     }
 
     @Override
-    public ArrayList<Student> getAll() throws Exception {
+    public ArrayList<User> getAll() throws Exception {
         return null;
     }
 

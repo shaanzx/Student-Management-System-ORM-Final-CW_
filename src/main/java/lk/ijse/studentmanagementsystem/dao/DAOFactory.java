@@ -1,6 +1,7 @@
 package lk.ijse.studentmanagementsystem.dao;
 
 import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.StudentDAOImpl;
+import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.UserDAOImpl;
 
 public class DAOFactory {
 
@@ -18,8 +19,8 @@ public class DAOFactory {
 
     public <T extends SuperDAO> T getDAO(DAOType daoType) {
         switch (daoType) {
-//            case USER:
-//                return (T) new UserDAOImpl();
+            case USER:
+                return (T) new UserDAOImpl();
             case STUDENT:
                 return (T) new StudentDAOImpl();
 //            case COURSE:

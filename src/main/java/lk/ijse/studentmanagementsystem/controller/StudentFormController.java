@@ -8,8 +8,10 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import lk.ijse.studentmanagementsystem.dto.StudentDTO;
 import lk.ijse.studentmanagementsystem.entity.Student;
+import lk.ijse.studentmanagementsystem.entity.User;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
 import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
+import lk.ijse.studentmanagementsystem.service.custom.UserBO;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -22,12 +24,9 @@ public class StudentFormController {
     @FXML private TableView<Student> studentTable;
     @FXML private Label timeLabel;
 
-    private final StudentBO studentBO;
+    StudentBO studentBO = BOFactory.getBoFactory().getBO(BOFactory.BOType.STUDENT);
 
-    public StudentFormController() {
-        this.studentBO = BOFactory.getBoFactory().getBO(BOFactory.BOType.STUDENT);
-    }
-
+    User u1 = new User();
     public void initialize() {
         genderComboBox.getItems().addAll("Male", "Female", "Other");
 
@@ -52,7 +51,8 @@ public class StudentFormController {
                 nicField.getText(),
                 emailField.getText(),
                 genderComboBox.getValue(),
-                addressField.getText()
+                addressField.getText(),
+                u1
         );
 
         try {

@@ -4,10 +4,12 @@ import lk.ijse.studentmanagementsystem.dao.DAOFactory;
 import lk.ijse.studentmanagementsystem.dao.custom.StudentDAO;
 import lk.ijse.studentmanagementsystem.dto.StudentDTO;
 import lk.ijse.studentmanagementsystem.entity.Student;
+import lk.ijse.studentmanagementsystem.entity.User;
 import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
 
 public class StudentBOImpl implements StudentBO {
     StudentDAO studentDAO = DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.STUDENT);
+    private User user;
     @Override
     public boolean saveStudent(StudentDTO studentDTO) throws Exception {
         Student student = new Student(
@@ -17,7 +19,8 @@ public class StudentBOImpl implements StudentBO {
                 studentDTO.getNic(),
                 studentDTO.getGmail(),
                 studentDTO.getGender(),
-                studentDTO.getAddress()
+                studentDTO.getAddress(),
+                user
         );
         return studentDAO.save(student);
     }

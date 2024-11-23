@@ -1,5 +1,6 @@
 package lk.ijse.studentmanagementsystem.dto;
 
+import lk.ijse.studentmanagementsystem.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,5 @@ public class StudentDTO {
     private String gmail;
     private String gender;
     private String address;
+    private User user;
 }

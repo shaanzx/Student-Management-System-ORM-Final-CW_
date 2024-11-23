@@ -1,6 +1,7 @@
 package lk.ijse.studentmanagementsystem.service;
 
 import lk.ijse.studentmanagementsystem.service.custom.boImpl.StudentBOImpl;
+import lk.ijse.studentmanagementsystem.service.custom.boImpl.UserBOImpl;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -25,8 +26,8 @@ public class BOFactory {
                 return (T) new StudentBOImpl();
 //            case COURSE:
 //                return (T) new CourseBOImpl();
-//            case USER:
-//                return (T) new UserBOImpl();
+            case USER:
+                return (T) new UserBOImpl();
 //            case REGISTRATION:
 //                return (T) new RegistrationBOImpl();
             default:

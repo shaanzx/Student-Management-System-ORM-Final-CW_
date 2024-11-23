@@ -46,6 +46,7 @@ public class LoginFormController {
 
     @FXML
     void btnSignUpOnAction(ActionEvent event) throws IOException {
+        System.out.println("Hello");
         Parent rootNode = FXMLLoader.load(this.getClass().getResource("/view/register-form.fxml"));
 
         Scene scene = new Scene(rootNode);
@@ -54,8 +55,11 @@ public class LoginFormController {
         stage.centerOnScreen();
         stage.setTitle("Register Form");
         stage.show();
+        System.out.println("Hello1");
+
 
         ancLogin.getScene().getWindow().hide();
+
     }
 
     @FXML
