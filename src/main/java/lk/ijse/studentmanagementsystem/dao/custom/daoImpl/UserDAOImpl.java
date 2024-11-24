@@ -5,10 +5,24 @@ import lk.ijse.studentmanagementsystem.dao.custom.UserDAO;
 import lk.ijse.studentmanagementsystem.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 
 public class UserDAOImpl implements UserDAO {
+    @Override
+    public String getLastId() throws Exception {
+        try(Session session = SessionFactoryConfig.getInstance().getSession()) {
+            String hql = "SELECT u.userId FROM User u ORDER BY u.userId DESC";
+            Query<String> query = session.createQuery(hql, String.class);
+            query.setMaxResults(1);
+            return query.uniqueResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public boolean save(User user) throws Exception {
         try(Session session = SessionFactoryConfig.getInstance().getSession()){

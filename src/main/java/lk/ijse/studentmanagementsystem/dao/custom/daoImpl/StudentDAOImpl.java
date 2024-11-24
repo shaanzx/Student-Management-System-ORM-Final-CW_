@@ -12,6 +12,11 @@ public class StudentDAOImpl implements StudentDAO {
     private Session session;
 
     @Override
+    public String getLastId() throws Exception {
+        return "";
+    }
+
+    @Override
     public boolean save(Student student) throws Exception {
         try(Session session = SessionFactoryConfig.getInstance().getSession()){
             Transaction transaction = session.beginTransaction();

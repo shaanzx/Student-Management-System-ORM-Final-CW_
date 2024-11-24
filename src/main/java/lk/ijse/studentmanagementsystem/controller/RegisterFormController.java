@@ -1,8 +1,6 @@
 package lk.ijse.studentmanagementsystem.controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.animation.TranslateTransition;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import lk.ijse.studentmanagementsystem.dto.UserDTO;
-import lk.ijse.studentmanagementsystem.entity.User;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
 import lk.ijse.studentmanagementsystem.service.custom.UserBO;
 
@@ -57,6 +53,11 @@ public class RegisterFormController {
 
     public void initialize() {
         cmbJobRole.getItems().addAll("Admin", "User");
+        try {
+            txtUserId.setText(userBo.generateNewUserId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

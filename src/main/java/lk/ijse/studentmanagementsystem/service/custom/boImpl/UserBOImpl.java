@@ -22,4 +22,19 @@ public class UserBOImpl implements UserBO {
         );
         return userDAO.save(user);
     }
+
+    @Override
+    public String generateNewUserId() throws Exception {
+        String lastId = userDAO.getLastId();
+        return incrementUserId(lastId);
+    }
+
+    private String incrementUserId(String lastId) {
+        if (lastId == null){
+            return "UID-0001";
+        }
+        int id = Integer.parseInt(lastId.split("-")[1]);
+        id++;
+        return String.format("UID-%04d", id);
+    }
 }
