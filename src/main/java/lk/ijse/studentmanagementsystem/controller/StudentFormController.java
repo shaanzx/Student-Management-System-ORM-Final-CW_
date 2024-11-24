@@ -12,6 +12,7 @@ import lk.ijse.studentmanagementsystem.entity.User;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
 import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
 import lk.ijse.studentmanagementsystem.service.custom.UserBO;
+import lk.ijse.studentmanagementsystem.util.ClockUtil;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -29,17 +30,8 @@ public class StudentFormController {
     User u1 = new User();
     public void initialize() {
         genderComboBox.getItems().addAll("Male", "Female", "Other");
+        ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
 
-        // Set up table columns
-        // ...
-
-        // Set up time display
-        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            LocalTime currentTime = LocalTime.now();
-            timeLabel.setText(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        }), new KeyFrame(Duration.seconds(1)));
-        clock.setCycleCount(Timeline.INDEFINITE);
-        clock.play();
     }
 
     @FXML

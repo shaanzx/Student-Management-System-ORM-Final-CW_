@@ -13,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
 import lk.ijse.studentmanagementsystem.service.custom.UserBO;
-import lk.ijse.studentmanagementsystem.util.Navigation;
 
 import java.io.IOException;
 
@@ -41,7 +40,7 @@ public class LoginFormController {
         boolean isValid = userBo.checkCredential(txtUserName.getText(), txtPassword.getText());
 
         if(isValid){
-            new Alert(Alert.AlertType.INFORMATION, "Login successful").show();
+
             Parent rootNode = FXMLLoader.load(this.getClass().getResource("/view/global-form.fxml"));
             Scene scene = new Scene(rootNode);
             Stage stage = new Stage();
@@ -49,6 +48,7 @@ public class LoginFormController {
             stage.centerOnScreen();
             stage.setTitle("Register Form");
             stage.show();
+            new Alert(Alert.AlertType.INFORMATION, "Login Success").show();
 
             ancLogin.getScene().getWindow().hide();
         }else {

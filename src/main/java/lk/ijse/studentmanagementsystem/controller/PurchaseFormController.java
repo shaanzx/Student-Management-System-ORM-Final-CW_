@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+import lk.ijse.studentmanagementsystem.util.ClockUtil;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -78,12 +79,8 @@ public class PurchaseFormController {
     private Label timeLabel;
 
     public void initialize() {
-        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            LocalTime currentTime = LocalTime.now();
-            timeLabel.setText(currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        }), new KeyFrame(Duration.seconds(1)));
-        clock.setCycleCount(Timeline.INDEFINITE);
-        clock.play();
+        ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
+
     }
 
     @FXML
