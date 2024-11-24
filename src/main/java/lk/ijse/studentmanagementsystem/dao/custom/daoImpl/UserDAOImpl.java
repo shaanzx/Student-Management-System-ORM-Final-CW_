@@ -60,4 +60,14 @@ public class UserDAOImpl implements UserDAO {
     public ArrayList<String> loadIds() throws Exception {
         return null;
     }
+
+    @Override
+    public User findByUserName(String userId) {
+        try(Session session = SessionFactoryConfig.getInstance().getSession()){
+            String hql = "SELECT u FROM User u WHERE u.userId = :userId";
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("userId", userId);
+            return query.uniqueResult();
+        }
+    }
 }

@@ -33,6 +33,15 @@ public class UserBOImpl implements UserBO {
         return incrementUserId(lastId);
     }
 
+    @Override
+    public boolean checkCredential(String useName, String password) {
+        User user = userDAO.findByUserName(useName);
+        if(user != null){
+              return BCrypt.checkpw(password, user.getUserPassword());
+        }
+        return false;
+    }
+
     private String incrementUserId(String lastId) {
         if (lastId == null){
             return "UID-0001";

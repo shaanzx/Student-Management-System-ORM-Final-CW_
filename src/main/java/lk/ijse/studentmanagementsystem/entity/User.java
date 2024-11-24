@@ -32,6 +32,6 @@ public class User {
     @Column(name = "user_password")
     private String userPassword;
 
-    @OneToMany(mappedBy = "user") // Use the correct mappedBy field
+    @OneToMany(mappedBy = "user")
     private List<Student> student;
 }

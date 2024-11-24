@@ -8,4 +8,6 @@ public interface UserBO extends SuperBO {
     boolean saveUser(UserDTO userDTO) throws Exception;
 
     String generateNewUserId() throws Exception;
+
+    boolean checkCredential(String useName, String password);
 }
