@@ -5,12 +5,16 @@ import lk.ijse.studentmanagementsystem.dao.custom.UserDAO;
 import lk.ijse.studentmanagementsystem.dto.UserDTO;
 import lk.ijse.studentmanagementsystem.entity.User;
 import lk.ijse.studentmanagementsystem.service.custom.UserBO;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserBOImpl implements UserBO {
 
     UserDAO userDAO = DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.USER);
     @Override
     public boolean saveUser(UserDTO userDTO) throws Exception {
+
+        String hashPassword = BCrypt.hashpw(userDTO.getUserPassword(), BCrypt.gensalt());
+        userDTO.setUserPassword(hashPassword);
         User user = new User(
                 userDTO.getUserId(),
                 userDTO.getUserRole(),

@@ -7,6 +7,7 @@ module lk.ijse.studentmanagementsystem {
     requires jakarta.persistence;
     requires static lombok;
     requires java.naming;
+    requires jbcrypt;
 
     opens lk.ijse.studentmanagementsystem.entity to org.hibernate.orm.core;
     opens lk.ijse.studentmanagementsystem.controller to javafx.fxml;
