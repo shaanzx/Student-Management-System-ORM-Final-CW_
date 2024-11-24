@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Point3D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -48,11 +49,17 @@
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <JFXButton fx:id="btnRegister" buttonType="RAISED" layoutX="127.0" layoutY="535.0" onAction="#btnRegisterOnAction" prefHeight="55.0" prefWidth="118.0" ripplerFill="#f8f8f8" style="-fx-background-color: black; -fx-font-size: 24; -fx-font-family: impact; -fx-alignment: center; -fx-background-radius: 50; -fx-text-fill: white;" text="Register" textAlignment="CENTER">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="195.0" layoutY="603.0" text="If Register done? &quot;Sign In&quot;">
                <font>
@@ -64,7 +71,7 @@
                   <Font name="Impact" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtUserEmail" layoutX="40.0" layoutY="304.0" onAction="#txtUserEmailOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your Email">
+            <TextField fx:id="txtUserEmail" alignment="CENTER_RIGHT" layoutX="40.0" layoutY="304.0" onAction="#txtUserEmailOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your Email" text="\@gmail.com">
                <font>
                   <Font name="Impact" size="14.0" />
                </font>
@@ -74,7 +81,7 @@
                   <Font name="Impact" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtUserMobileNo" layoutX="40.0" layoutY="394.0" onAction="#txtUserMobileNoOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your Mobile No">
+            <TextField fx:id="txtUserMobileNo" layoutX="40.0" layoutY="394.0" onAction="#txtUserMobileNoOnAction" prefHeight="26.0" prefWidth="433.0" promptText="Enter Your Mobile No" text="+94">
                <font>
                   <Font name="Impact" size="14.0" />
                </font>

@@ -10,6 +10,23 @@ import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
 public class StudentBOImpl implements StudentBO {
     StudentDAO studentDAO = DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.STUDENT);
     private User user;
+
+    @Override
+    public String generateNextStudentId() throws Exception {
+        String lastId = studentDAO.getLastId();
+        return incrementStudentId(lastId);
+    }
+
+    private String incrementStudentId(String lastId) {
+        if (lastId == null) {
+            return "STU-0001";
+        }
+        int id = Integer.parseInt(lastId.split("-")[1]);
+        id++;
+        return String.format("STU-%04d", id);
+    }
+
+
     @Override
     public boolean saveStudent(StudentDTO studentDTO) throws Exception {
         Student student = new Student(
@@ -49,4 +66,6 @@ public class StudentBOImpl implements StudentBO {
     public boolean loadIds(String id) throws Exception {
         return false;
     }
+
+
 }

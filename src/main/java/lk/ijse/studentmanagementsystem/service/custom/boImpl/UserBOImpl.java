@@ -28,18 +28,18 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
-    public String generateNewUserId() throws Exception {
-        String lastId = userDAO.getLastId();
-        return incrementUserId(lastId);
-    }
-
-    @Override
     public boolean checkCredential(String useName, String password) {
         User user = userDAO.findByUserName(useName);
         if(user != null){
-              return BCrypt.checkpw(password, user.getUserPassword());
+            return BCrypt.checkpw(password, user.getUserPassword());
         }
         return false;
+    }
+
+    @Override
+    public String generateNewUserId() throws Exception {
+        String lastId = userDAO.getLastId();
+        return incrementUserId(lastId);
     }
 
     private String incrementUserId(String lastId) {

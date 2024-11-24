@@ -19,8 +19,8 @@ import java.time.format.DateTimeFormatter;
 
 
 public class StudentFormController {
-    @FXML private TextField studentIdField, nameField, phoneField, nicField, emailField;
-    @FXML private TextArea addressField;
+    @FXML private TextField txtStudentId, txtStudentName, txtStudentTel, txtStudentNIC, txtStudentEmail;
+    @FXML private TextArea txtStudentAddress;
     @FXML private ComboBox<String> genderComboBox;
     @FXML private TableView<Student> studentTable;
     @FXML private Label timeLabel;
@@ -31,25 +31,35 @@ public class StudentFormController {
     public void initialize() {
         genderComboBox.getItems().addAll("Male", "Female", "Other");
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
+        generateNextStudentId();
+    }
 
+    private void generateNextStudentId() {
+        try {
+            txtStudentId.setText(studentBO.generateNextStudentId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     private void btnSaveStudentOnAction() {
         StudentDTO student = new StudentDTO(
-                studentIdField.getText(),
-                nameField.getText(),
-                phoneField.getText(),
-                nicField.getText(),
-                emailField.getText(),
+                txtStudentId.getText(),
+                txtStudentName.getText(),
+                txtStudentTel.getText(),
+                txtStudentNIC.getText(),
+                txtStudentEmail.getText(),
                 genderComboBox.getValue(),
-                addressField.getText(),
+                txtStudentAddress.getText(),
                 u1
         );
 
         try {
             if (studentBO.saveStudent(student)) {
                 new Alert(Alert.AlertType.INFORMATION, "Student saved successfully").show();
+                btnClearStudentOnAction();
+                generateNextStudentId();
             }else{
                 new Alert(Alert.AlertType.ERROR, "Failed to save student").show();
             }
@@ -60,15 +70,13 @@ public class StudentFormController {
 
     @FXML
     private void btnClearStudentOnAction() {
-        studentIdField.clear();
-        nameField.clear();
-        addressField.clear();
-//        phoneField.clear();
-        nicField.clear();
-//        emailField.clear();
+        txtStudentId.clear();
+        txtStudentName.clear();
+        txtStudentAddress.clear();
+        txtStudentNIC.clear();
         genderComboBox.getSelectionModel().clearSelection();
-        phoneField.setText("+94");
-        emailField.setText("gmail.com");
+        txtStudentTel.setText("+94");
+        txtStudentEmail.setText("gmail.com");
     }
 
     public void btnUpdateStudentOnAction(ActionEvent actionEvent) {

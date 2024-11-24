@@ -53,6 +53,10 @@ public class RegisterFormController {
 
     public void initialize() {
         cmbJobRole.getItems().addAll("Admin", "User");
+        generateNextUserId();
+    }
+
+    private void generateNextUserId() {
         try {
             txtUserId.setText(userBo.generateNewUserId());
         } catch (Exception e) {
@@ -60,6 +64,15 @@ public class RegisterFormController {
         }
     }
 
+    private void clearTextField(){
+        txtUserId.clear();
+        txtUserName.clear();
+        cmbJobRole.getSelectionModel().clearSelection();
+        txtUserEmail.setText("gmail.com");
+        txtUserMobileNo.setText("+94");
+        txtPassword.clear();
+
+    }
     @FXML
     void btnRegisterOnAction(ActionEvent event) {
         btnSignIn.requestFocus();
@@ -76,6 +89,7 @@ public class RegisterFormController {
         try {
             if(userBo.saveUser(user)){
                 new Alert(Alert.AlertType.INFORMATION, "User saved successfully").show();
+
             }else{
                 new Alert(Alert.AlertType.ERROR, "User not saved").show();
             }

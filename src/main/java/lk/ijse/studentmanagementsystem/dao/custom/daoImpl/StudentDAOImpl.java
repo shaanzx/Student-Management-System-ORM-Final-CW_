@@ -5,15 +5,23 @@ import lk.ijse.studentmanagementsystem.dao.custom.StudentDAO;
 import lk.ijse.studentmanagementsystem.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 
 public class StudentDAOImpl implements StudentDAO {
-    private Session session;
 
     @Override
     public String getLastId() throws Exception {
-        return "";
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            String hql = "SELECT s.studentId FROM Student s ORDER BY s.studentId DESC";
+            Query<String> query = session.createQuery(hql, String.class);
+            query.setMaxResults(1);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

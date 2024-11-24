@@ -15,4 +15,6 @@ public interface StudentBO extends SuperBO {
     boolean getAllStudents(StudentDTO studentDTO) throws Exception;
 
     boolean loadIds(String id) throws Exception;
+
+    String generateNextStudentId() throws Exception;
 }
