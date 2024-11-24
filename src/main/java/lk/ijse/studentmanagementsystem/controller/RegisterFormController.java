@@ -15,11 +15,11 @@ import javafx.stage.Stage;
 import lk.ijse.studentmanagementsystem.dto.UserDTO;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
 import lk.ijse.studentmanagementsystem.service.custom.UserBO;
+import lk.ijse.studentmanagementsystem.util.Validation;
 
 import java.io.IOException;
 
 public class RegisterFormController {
-
 
     @FXML
     private AnchorPane ancRegister;
@@ -54,6 +54,26 @@ public class RegisterFormController {
     public void initialize() {
         cmbJobRole.getItems().addAll("Admin", "User");
         generateNextUserId();
+        validationIntentFields();
+    }
+
+    private void validationIntentFields() {
+        txtUserId.textProperty().addListener((observable, oldValue, newValue) -> validateUserForm());
+        txtUserName.textProperty().addListener((observable, oldValue, newValue) -> validateUserForm());
+        txtUserEmail.textProperty().addListener((observable, oldValue, newValue) -> validateUserForm());
+        txtUserMobileNo.textProperty().addListener((observable, oldValue, newValue) -> validateUserForm());
+        txtPassword.textProperty().addListener((observable, oldValue, newValue) -> validateUserForm());
+
+    }
+
+    private void validateUserForm() {
+        boolean isValid = Validation.validateAllFields(txtUserId, txtUserName, txtUserEmail, txtUserMobileNo, txtPassword);
+
+        if (isValid && cmbJobRole.getValue() != null) {
+            btnRegister.setDisable(false);
+        } else {
+            btnRegister.setDisable(true);
+        }
     }
 
     private void generateNextUserId() {
@@ -64,7 +84,7 @@ public class RegisterFormController {
         }
     }
 
-    private void clearTextField(){
+    private void clearTextField() {
         txtUserId.clear();
         txtUserName.clear();
         cmbJobRole.getSelectionModel().clearSelection();
@@ -73,6 +93,7 @@ public class RegisterFormController {
         txtPassword.clear();
 
     }
+
     @FXML
     void btnRegisterOnAction(ActionEvent event) {
         btnSignIn.requestFocus();
@@ -87,15 +108,17 @@ public class RegisterFormController {
         );
 
         try {
-            if(userBo.saveUser(user)){
+            if (userBo.saveUser(user)) {
                 new Alert(Alert.AlertType.INFORMATION, "User saved successfully").show();
-
-            }else{
+                clearTextField();
+                generateNextUserId();
+            } else {
                 new Alert(Alert.AlertType.ERROR, "User not saved").show();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @FXML
