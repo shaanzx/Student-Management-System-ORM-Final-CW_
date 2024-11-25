@@ -102,4 +102,17 @@ public class StudentDAOImpl implements StudentDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean checkStudent(String studentNIC) {
+        try(Session session = SessionFactoryConfig.getInstance().getSession()){
+            String hql = "FROM Student s WHERE s.studentNic = :studentNic";
+            Query<Student> query = session.createQuery(hql, Student.class);
+            query.setParameter("studentNic", studentNIC);
+            return query.uniqueResult() != null;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

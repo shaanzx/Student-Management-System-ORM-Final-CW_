@@ -101,7 +101,7 @@ public class StudentFormController {
 
         if (isValid && genderComboBox.getValue() != null) {
             btnSave.setDisable(false);
-            btnUpdate.setDisable(false); // Disable the update btn
+            btnUpdate.setDisable(false);
         } else {
             btnSave.setDisable(true);
             btnUpdate.setDisable(true);
@@ -152,30 +152,41 @@ public class StudentFormController {
 
     @FXML
     private void btnSaveStudentOnAction() {
-        StudentDTO student = new StudentDTO(
-                txtStudentId.getText(),
-                txtStudentName.getText(),
-                txtStudentTel.getText(),
-                txtStudentNIC.getText(),
-                txtStudentEmail.getText(),
-                genderComboBox.getValue(),
-                txtStudentAddress.getText(),
-                u1
-        );
+        String nic = txtStudentNIC.getText().trim();
 
         try {
-            if (studentBO.saveStudent(student)) {
-                new Alert(Alert.AlertType.INFORMATION, "Student saved successfully").show();
+            if (studentBO.checkStudent(nic)) {
+                new Alert(Alert.AlertType.ERROR, "This student already exists!").show();
+                return;
+            }
+
+            StudentDTO student = new StudentDTO(
+                    txtStudentId.getText().trim(),
+                    txtStudentName.getText().trim(),
+                    txtStudentTel.getText().trim(),
+                    nic,
+                    txtStudentEmail.getText().trim(),
+                    genderComboBox.getValue(),
+                    txtStudentAddress.getText().trim(),
+                    u1
+            );
+
+            boolean isSaved = studentBO.saveStudent(student);
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Student saved successfully!").show();
                 btnClearStudentOnAction();
                 generateNextStudentId();
                 loadAllStudents();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Failed to save student").show();
+                new Alert(Alert.AlertType.ERROR, "Failed to save student!").show();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            new Alert(Alert.AlertType.ERROR, "An error occurred: " + e.getMessage()).show();
+            e.printStackTrace();
         }
     }
+
 
     @FXML
     private void btnClearStudentOnAction() {
@@ -183,12 +194,13 @@ public class StudentFormController {
         txtStudentName.clear();
         txtStudentAddress.clear();
         txtStudentNIC.clear();
-        genderComboBox.getSelectionModel().clearSelection();
+        genderComboBox.setValue(null);
         txtStudentTel.setText("+94");
         txtStudentEmail.setText("gmail.com");
         txtStudentId.setDisable(false);
         btnSave.setDisable(false);
         btnDeleteStudent.setDisable(false);
+        btnUpdate.setDisable(false);
     }
 
     @FXML
@@ -280,7 +292,7 @@ public class StudentFormController {
                 new Alert(Alert.AlertType.WARNING, "No student found with NIC: " + studentNIC).show();
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Log the error for debugging
+            e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "An error occurred while searching for the student. Please try again.").show();
         }
     }

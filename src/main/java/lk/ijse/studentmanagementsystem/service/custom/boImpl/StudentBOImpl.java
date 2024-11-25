@@ -34,6 +34,11 @@ public class StudentBOImpl implements StudentBO {
         );
     }
 
+    @Override
+    public boolean checkStudent(String studentId) throws Exception {
+        return studentDAO.checkStudent(studentId);
+    }
+
     private String incrementStudentId(String lastId) {
         if (lastId == null) {
             return "STU-0001";

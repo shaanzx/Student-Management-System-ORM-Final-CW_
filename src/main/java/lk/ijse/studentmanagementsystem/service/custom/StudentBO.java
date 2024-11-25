@@ -21,4 +21,6 @@ public interface StudentBO extends SuperBO {
     String generateNextStudentId() throws Exception;
 
     StudentDTO searchStudentByNic(String studentNIC) throws Exception;
+
+    boolean checkStudent(String studentId) throws Exception;
 }
