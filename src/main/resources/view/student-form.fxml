@@ -88,13 +88,14 @@
         </HBox>
 
         <!-- Student Details Table -->
-        <TableView fx:id="studentTable" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tblStudent" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="100" text="ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="150" text="Name" />
-                <TableColumn fx:id="phoneColumn" prefWidth="120" text="Phone" />
-                <TableColumn fx:id="emailColumn" prefWidth="200" text="Email" />
-                <TableColumn fx:id="genderColumn" prefWidth="100" text="Gender" />
+                <TableColumn fx:id="colStudentId" prefWidth="100" text="ID" />
+                <TableColumn fx:id="colStudentName" prefWidth="150" text="Name" />
+                <TableColumn fx:id="colStudentPhone" prefWidth="120" text="Phone" />
+            <TableColumn fx:id="colStudentAddress" prefWidth="200" text="Address" />
+                <TableColumn fx:id="colStudentEmail" prefWidth="200" text="Email" />
+                <TableColumn fx:id="colStudentGender" prefWidth="100" text="Gender" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -3,6 +3,8 @@ package lk.ijse.studentmanagementsystem.service.custom;
 import lk.ijse.studentmanagementsystem.dto.StudentDTO;
 import lk.ijse.studentmanagementsystem.service.SuperBO;
 
+import java.util.ArrayList;
+
 public interface StudentBO extends SuperBO {
     boolean saveStudent(StudentDTO studentDTO) throws Exception;
 
@@ -12,7 +14,7 @@ public interface StudentBO extends SuperBO {
 
     boolean searchStudent(StudentDTO studentDTO) throws Exception;
 
-    boolean getAllStudents(StudentDTO studentDTO) throws Exception;
+    ArrayList<StudentDTO> getAllStudents() throws Exception;
 
     boolean loadIds(String id) throws Exception;
 

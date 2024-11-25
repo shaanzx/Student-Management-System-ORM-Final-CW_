@@ -13,5 +13,5 @@ module lk.ijse.studentmanagementsystem {
     opens lk.ijse.studentmanagementsystem.controller to javafx.fxml;
     exports lk.ijse.studentmanagementsystem;
     exports lk.ijse.studentmanagementsystem.controller;
-
+    opens lk.ijse.studentmanagementsystem.tm to javafx.base;
 }

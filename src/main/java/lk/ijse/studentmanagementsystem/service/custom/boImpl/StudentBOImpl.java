@@ -7,6 +7,8 @@ import lk.ijse.studentmanagementsystem.entity.Student;
 import lk.ijse.studentmanagementsystem.entity.User;
 import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
 
+import java.util.ArrayList;
+
 public class StudentBOImpl implements StudentBO {
     StudentDAO studentDAO = DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.STUDENT);
     private User user;
@@ -58,8 +60,22 @@ public class StudentBOImpl implements StudentBO {
     }
 
     @Override
-    public boolean getAllStudents(StudentDTO studentDTO) throws Exception {
-        return false;
+    public ArrayList<StudentDTO> getAllStudents() throws Exception {
+        ArrayList<StudentDTO> studentDTOS = new ArrayList<>();
+        ArrayList<Student> students = studentDAO.getAll();
+        for (Student student : students) {
+            studentDTOS.add(new StudentDTO(
+                    student.getStudentId(),
+                    student.getStudentName(),
+                    student.getStudentPhone(),
+                    student.getStudentNic(),
+                    student.getStudentEmail(),
+                    student.getStudentGender(),
+                    student.getStudentAddress(),
+                    user
+            ));
+        }
+        return studentDTOS;
     }
 
     @Override

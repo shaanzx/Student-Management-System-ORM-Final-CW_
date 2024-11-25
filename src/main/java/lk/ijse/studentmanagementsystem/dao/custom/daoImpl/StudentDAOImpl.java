@@ -54,7 +54,13 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public ArrayList<Student> getAll() throws Exception {
-        return null;
+        ArrayList<Student> students = new ArrayList<>();
+        try(Session session = SessionFactoryConfig.getInstance().getSession()){
+            students = (ArrayList<Student>) session.createQuery("FROM Student").list();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return students;
     }
 
     @Override
