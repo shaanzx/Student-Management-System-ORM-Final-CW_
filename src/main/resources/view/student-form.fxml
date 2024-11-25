@@ -88,14 +88,15 @@
         </HBox>
 
         <!-- Student Details Table -->
-        <TableView fx:id="tblStudent" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tblStudent" onMouseClicked="#tblStudentclickOnAction" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colStudentId" prefWidth="100" text="ID" />
                 <TableColumn fx:id="colStudentName" prefWidth="150" text="Name" />
                 <TableColumn fx:id="colStudentPhone" prefWidth="120" text="Phone" />
-            <TableColumn fx:id="colStudentAddress" prefWidth="200" text="Address" />
+            <TableColumn fx:id="ColStudentNIC" prefWidth="200" text="NIC No" />
                 <TableColumn fx:id="colStudentEmail" prefWidth="200" text="Email" />
                 <TableColumn fx:id="colStudentGender" prefWidth="100" text="Gender" />
+            <TableColumn fx:id="colStudentAddress" prefWidth="200" text="Address" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

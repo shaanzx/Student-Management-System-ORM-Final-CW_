@@ -1,11 +1,14 @@
 package lk.ijse.studentmanagementsystem.controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.studentmanagementsystem.dto.StudentDTO;
 import lk.ijse.studentmanagementsystem.entity.Student;
@@ -28,6 +31,18 @@ public class StudentFormController {
     @FXML private ComboBox<String> genderComboBox;
     @FXML private TableView<StudentTM> tblStudent;
     @FXML private Label timeLabel;
+
+    @FXML
+    private Button btnClearStudent;
+
+    @FXML
+    private Button btnDeleteStudent;
+
+    @FXML
+    private Button btnSave;
+
+    @FXML
+    private Button btnUpdate;
     @FXML
     private TableColumn<?, ?> colStudentAddress;
 
@@ -42,6 +57,9 @@ public class StudentFormController {
 
     @FXML
     private TableColumn<?, ?> colStudentName;
+
+    @FXML
+    private TableColumn<?, ?> ColStudentNIC;
 
     @FXML
     private TableColumn<?, ?> colStudentPhone;
@@ -84,9 +102,10 @@ public class StudentFormController {
         colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
         colStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colStudentPhone.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        colStudentAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        ColStudentNIC.setCellValueFactory(new PropertyValueFactory<>("nic"));
         colStudentEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colStudentGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        colStudentAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
     }
 
 
@@ -139,5 +158,24 @@ public class StudentFormController {
     }
 
     public void btnDeleteStudentOnAction(ActionEvent actionEvent) {
+    }
+
+    public void tblStudentclickOnAction(MouseEvent mouseEvent) {
+        if (txtStudentId != null) {
+            btnSave.setDisable(true);
+            btnDeleteStudent.setDisable(true);
+            txtStudentId.setDisable(true);
+        }
+        TablePosition tp = tblStudent.getSelectionModel().getSelectedCells().get(0);
+        int row = tp.getRow();
+        ObservableList<TableColumn<StudentTM, ?> > columns = tblStudent.getColumns();
+        txtStudentId.setText(columns.get(0).getCellData(row).toString());
+        txtStudentName.setText(columns.get(1).getCellData(row).toString());
+        txtStudentTel.setText(columns.get(2).getCellData(row).toString());
+        txtStudentNIC.setText(columns.get(3).getCellData(row).toString());
+        txtStudentEmail.setText(columns.get(4).getCellData(row).toString());
+        genderComboBox.setValue(columns.get(5).getCellData(row).toString());
+        txtStudentAddress.setText(columns.get(6).getCellData(row).toString());
+        tblStudent.setCursor(Cursor.HAND);
     }
 }
