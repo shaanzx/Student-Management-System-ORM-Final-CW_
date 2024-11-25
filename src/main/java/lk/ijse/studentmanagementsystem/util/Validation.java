@@ -46,4 +46,12 @@ public class Validation {
 
         return isStudentIdValid && isNameValid && isEmailValid && isMobileValid && isNicValid && isAddressValid;
     }
+
+    //Login Validation
+    public static boolean validateAllFields(TextField userNameField, TextField passwordField) {
+        boolean isUserNameValid = validateField(userNameField, USER_ID_PATTERN);
+        boolean isPasswordValid = validateField(passwordField, PASSWORD_PATTERN);
+
+        return isUserNameValid && isPasswordValid;
+    }
 }

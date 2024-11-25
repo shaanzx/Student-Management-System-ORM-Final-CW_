@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
 import lk.ijse.studentmanagementsystem.service.custom.UserBO;
+import lk.ijse.studentmanagementsystem.util.Validation;
 
 import java.io.IOException;
 
@@ -46,6 +47,20 @@ public class LoginFormController {
     }
 
     UserBO userBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.USER);
+
+    public void initialize() {
+        validationFields();
+    }
+
+    private void validationFields() {
+        txtUserName.textProperty().addListener((observable, oldValue, newValue) -> validateUserForm());
+        txtPassword.textProperty().addListener((observable, oldValue, newValue) -> validateUserForm());
+    }
+
+    private void validateUserForm() {
+        boolean isValid = Validation.validateAllFields(txtUserName, txtPassword);
+        btnSignIn.setDisable(!isValid);
+    }
 
     @FXML
     void btnSignInOnAction(ActionEvent event) throws IOException {

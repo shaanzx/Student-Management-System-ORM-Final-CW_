@@ -51,18 +51,18 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="250.0" />
             </columnConstraints>
 
-            <TextField fx:id="txtStudentId" onAction="#txtSearchStudentByIdOnAction" promptText="Student ID" style="-fx-font-family: impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="txtStudentName" promptText="Name" style="-fx-font-family: impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="1" />
-            <TextField fx:id="txtStudentTel" promptText="Phone No" style="-fx-font-family: impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" text="+94" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-            <TextField fx:id="txtStudentNIC" onAction="#txtSearchStudentByNICOnAction" promptText="NIC No" style="-fx-font-family: impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+            <TextField fx:id="txtStudentId" onAction="#txtSearchStudentByIdOnAction" promptText="Student ID" style="-fx-font-family: sans-serif; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtStudentName" promptText="Name" style="-fx-font-family: sans-serif; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="1" />
+            <TextField fx:id="txtStudentTel" promptText="Phone No" style="-fx-font-family: sans-serif; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" text="+94" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <TextField fx:id="txtStudentNIC" onAction="#txtSearchStudentByNICOnAction" promptText="NIC No" style="-fx-font-family: sans-serif; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
             <TextField fx:id="txtStudentEmail" alignment="CENTER_RIGHT" promptText="Email Address" style="-fx-font-family: impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10; -fx-alignment: RIght;" text="\@gmail.com" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <ComboBox fx:id="genderComboBox" prefWidth="150" promptText="Gender" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          <Group GridPane.rowIndex="2">
             <children>
                <TextField fx:id="txtStudentAddress" alignment="TOP_LEFT" prefHeight="39.0" prefWidth="768.0" promptText="Address" style="-fx-font-family: impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10; -fx-alignment: RIght;" />
             </children>
          </Group>
+            <ComboBox fx:id="genderComboBox" prefWidth="150" promptText="Gender" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          <rowConstraints>
             <RowConstraints />
             <RowConstraints />
@@ -96,7 +96,7 @@
         </HBox>
 
         <!-- Student Details Table -->
-        <TableView fx:id="tblStudent" onMouseClicked="#tblStudentclickOnAction" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tblStudent" onMouseClicked="#tblStudentclickOnAction" style="-fx-font-family: Calibri; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colStudentId" prefWidth="100" text="ID" />
                 <TableColumn fx:id="colStudentName" prefWidth="150" text="Name" />

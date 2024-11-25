@@ -29,10 +29,14 @@ import java.util.ArrayList;
 
 
 public class StudentFormController {
-    @FXML private TextField txtStudentId, txtStudentName, txtStudentTel, txtStudentNIC, txtStudentEmail,txtStudentAddress;
-    @FXML private ComboBox<String> genderComboBox;
-    @FXML private TableView<StudentTM> tblStudent;
-    @FXML private Label timeLabel;
+    @FXML
+    private TextField txtStudentId, txtStudentName, txtStudentTel, txtStudentNIC, txtStudentEmail, txtStudentAddress;
+    @FXML
+    private ComboBox<String> genderComboBox;
+    @FXML
+    private TableView<StudentTM> tblStudent;
+    @FXML
+    private Label timeLabel;
 
     @FXML
     private Button btnClearStudent;
@@ -73,6 +77,7 @@ public class StudentFormController {
     StudentBO studentBO = BOFactory.getBoFactory().getBO(BOFactory.BOType.STUDENT);
 
     User u1 = new User();
+
     public void initialize() {
         genderComboBox.getItems().addAll("Male", "Female", "Other");
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
@@ -164,7 +169,7 @@ public class StudentFormController {
                 btnClearStudentOnAction();
                 generateNextStudentId();
                 loadAllStudents();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to save student").show();
             }
         } catch (Exception e) {
@@ -204,7 +209,7 @@ public class StudentFormController {
                 btnClearStudentOnAction();
                 generateNextStudentId();
                 loadAllStudents();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to update student").show();
             }
         } catch (Exception e) {
@@ -223,7 +228,7 @@ public class StudentFormController {
                 btnClearStudentOnAction();
                 generateNextStudentId();
                 loadAllStudents();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to delete student").show();
             }
         } catch (Exception e) {
@@ -240,7 +245,7 @@ public class StudentFormController {
         }
         TablePosition tp = tblStudent.getSelectionModel().getSelectedCells().get(0);
         int row = tp.getRow();
-        ObservableList<TableColumn<StudentTM, ?> > columns = tblStudent.getColumns();
+        ObservableList<TableColumn<StudentTM, ?>> columns = tblStudent.getColumns();
         txtStudentId.setText(columns.get(0).getCellData(row).toString());
         txtStudentName.setText(columns.get(1).getCellData(row).toString());
         txtStudentTel.setText(columns.get(2).getCellData(row).toString());
@@ -254,8 +259,15 @@ public class StudentFormController {
     @FXML
     public void btnSearchStudentOnAction(ActionEvent actionEvent) {
         String studentNIC = txtStudentNIC.getText();
+
+        if (studentNIC == null || studentNIC.trim().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please enter a valid student NIC.").show();
+            return;
+        }
+
         try {
             StudentDTO student = studentBO.searchStudentByNic(studentNIC);
+
             if (student != null) {
                 txtStudentId.setText(student.getId());
                 txtStudentName.setText(student.getName());
@@ -268,15 +280,21 @@ public class StudentFormController {
                 new Alert(Alert.AlertType.WARNING, "No student found with NIC: " + studentNIC).show();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Log the error for debugging
+            new Alert(Alert.AlertType.ERROR, "An error occurred while searching for the student. Please try again.").show();
         }
-
-
     }
+
 
     @FXML
     public void txtSearchStudentByIdOnAction(ActionEvent event) {
         String studentId = txtStudentId.getText();
+
+        if (studentId == null || studentId.trim().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please enter a valid student NIC.").show();
+            return;
+        }
+
         try {
             StudentDTO student = studentBO.searchStudent(studentId);
             if (student != null) {
@@ -298,6 +316,12 @@ public class StudentFormController {
     @FXML
     public void txtSearchStudentByNICOnAction(ActionEvent actionEvent) {
         String studentNIC = txtStudentNIC.getText();
+
+        if (studentNIC == null || studentNIC.trim().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please enter a valid student NIC.").show();
+            return;
+        }
+
         try {
             StudentDTO student = studentBO.searchStudentByNic(studentNIC);
             if (student != null) {
