@@ -73,8 +73,8 @@ public class StudentBOImpl implements StudentBO {
     }
 
     @Override
-    public boolean deleteStudent(StudentDTO studentDTO) throws Exception {
-        return false;
+    public boolean deleteStudent(String studentId) throws Exception {
+        return studentDAO.delete(studentId);
     }
 
     @Override

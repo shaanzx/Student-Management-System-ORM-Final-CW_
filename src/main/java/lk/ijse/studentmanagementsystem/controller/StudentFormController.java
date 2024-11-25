@@ -164,6 +164,7 @@ public class StudentFormController {
         btnDeleteStudent.setDisable(false);
     }
 
+    @FXML
     public void btnUpdateStudentOnAction(ActionEvent actionEvent) {
         StudentDTO studentDTO = new StudentDTO(
                 txtStudentId.getText(),
@@ -189,13 +190,30 @@ public class StudentFormController {
         }
     }
 
+    @FXML
     public void btnDeleteStudentOnAction(ActionEvent actionEvent) {
+        String studentId = txtStudentId.getText();
+
+        try {
+            boolean isDeleted = studentBO.deleteStudent(studentId);
+            if (isDeleted) {
+                new Alert(Alert.AlertType.INFORMATION, "Student deleted successfully").show();
+                btnClearStudentOnAction();
+                generateNextStudentId();
+                loadAllStudents();
+            }else{
+                new Alert(Alert.AlertType.ERROR, "Failed to delete student").show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    @FXML
     public void tblStudentclickOnAction(MouseEvent mouseEvent) {
         if (txtStudentId != null) {
             btnSave.setDisable(true);
-            btnDeleteStudent.setDisable(true);
+            btnSearch.setDisable(true);
             txtStudentId.setDisable(true);
         }
         TablePosition tp = tblStudent.getSelectionModel().getSelectedCells().get(0);
@@ -211,6 +229,7 @@ public class StudentFormController {
         tblStudent.setCursor(Cursor.HAND);
     }
 
+    @FXML
     public void btnSearchStudentOnAction(ActionEvent actionEvent) {
         String studentNIC = txtStudentNIC.getText();
         try {
@@ -233,6 +252,7 @@ public class StudentFormController {
 
     }
 
+    @FXML
     public void txtSearchStudentByIdOnAction(ActionEvent event) {
         String studentId = txtStudentId.getText();
         try {
@@ -253,6 +273,7 @@ public class StudentFormController {
         }
     }
 
+    @FXML
     public void txtSearchStudentByNICOnAction(ActionEvent actionEvent) {
         String studentNIC = txtStudentNIC.getText();
         try {

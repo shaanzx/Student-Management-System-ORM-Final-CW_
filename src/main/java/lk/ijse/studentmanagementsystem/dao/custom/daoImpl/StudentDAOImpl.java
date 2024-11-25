@@ -52,7 +52,15 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean delete(String id) throws Exception {
-        return false;
+        try(Session session = SessionFactoryConfig.getInstance().getSession()){
+            Transaction transaction = session.beginTransaction();
+            session.delete(search(id));
+            transaction.commit();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
