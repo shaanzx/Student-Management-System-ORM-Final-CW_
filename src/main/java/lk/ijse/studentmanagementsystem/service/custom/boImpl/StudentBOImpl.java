@@ -19,6 +19,21 @@ public class StudentBOImpl implements StudentBO {
         return incrementStudentId(lastId);
     }
 
+    @Override
+    public StudentDTO searchStudentByNic(String studentNIC) throws Exception {
+        Student student = studentDAO.searchByNic(studentNIC);
+        return new StudentDTO(
+                student.getStudentId(),
+                student.getStudentName(),
+                student.getStudentPhone(),
+                student.getStudentNic(),
+                student.getStudentEmail(),
+                student.getStudentGender(),
+                student.getStudentAddress(),
+                user
+        );
+    }
+
     private String incrementStudentId(String lastId) {
         if (lastId == null) {
             return "STU-0001";
@@ -46,7 +61,15 @@ public class StudentBOImpl implements StudentBO {
 
     @Override
     public boolean updateStudent(StudentDTO studentDTO) throws Exception {
-        return false;
+        return studentDAO.update(new Student(
+                studentDTO.getId(),
+                studentDTO.getName(),
+                studentDTO.getPhoneNo(),
+                studentDTO.getNic(),
+                studentDTO.getGmail(),
+                studentDTO.getGender(),
+                studentDTO.getAddress(),
+                user));
     }
 
     @Override
@@ -55,8 +78,18 @@ public class StudentBOImpl implements StudentBO {
     }
 
     @Override
-    public boolean searchStudent(StudentDTO studentDTO) throws Exception {
-        return false;
+    public StudentDTO searchStudent(String studentId) throws Exception {
+        Student student = studentDAO.search(studentId);
+        return new StudentDTO(
+                student.getStudentId(),
+                student.getStudentName(),
+                student.getStudentPhone(),
+                student.getStudentNic(),
+                student.getStudentEmail(),
+                student.getStudentGender(),
+                student.getStudentAddress(),
+                user
+        );
     }
 
     @Override

@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface StudentDAO extends CrudDAO<Student,String> {
 
+    Student searchByNic(String studentNIC) throws Exception;
 }

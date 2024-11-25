@@ -33,13 +33,25 @@ public class LoginFormController {
     @FXML
     private TextField txtUserName;
 
+
+    public String userId;
+    private static LoginFormController controller;
+
+    public LoginFormController() {
+        controller = this;
+    }
+
+    public static LoginFormController getInstance() {
+        return controller;
+    }
+
     UserBO userBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.USER);
 
     @FXML
     void btnSignInOnAction(ActionEvent event) throws IOException {
         boolean isValid = userBo.checkCredential(txtUserName.getText(), txtPassword.getText());
 
-        if(isValid){
+        if (isValid) {
 
             Parent rootNode = FXMLLoader.load(this.getClass().getResource("/view/global-form.fxml"));
             Scene scene = new Scene(rootNode);
@@ -51,7 +63,7 @@ public class LoginFormController {
             new Alert(Alert.AlertType.INFORMATION, "Login Success").show();
 
             ancLogin.getScene().getWindow().hide();
-        }else {
+        } else {
             new Alert(Alert.AlertType.ERROR, "Invalid username or password").show();
         }
 

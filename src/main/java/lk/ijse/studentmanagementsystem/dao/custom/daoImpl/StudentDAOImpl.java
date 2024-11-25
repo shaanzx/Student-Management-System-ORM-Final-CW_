@@ -39,17 +39,20 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean update(Student entity) throws Exception {
-        return false;
+        try(Session session = SessionFactoryConfig.getInstance().getSession()){
+            Transaction transaction = session.beginTransaction();
+            session.update(entity);
+            transaction.commit();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean delete(String id) throws Exception {
         return false;
-    }
-
-    @Override
-    public Student search(String id) throws Exception {
-        return null;
     }
 
     @Override
@@ -66,5 +69,29 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public ArrayList<String> loadIds() throws Exception {
         return null;
+    }
+
+    @Override
+    public Student search(String id) throws Exception {
+        try(Session session = SessionFactoryConfig.getInstance().getSession()){
+            System.out.println(session.get(Student.class, id));
+            return session.get(Student.class, id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Student searchByNic(String studentNIC) throws Exception {
+        try(Session session = SessionFactoryConfig.getInstance().getSession()){
+            String hql = "FROM Student s WHERE s.studentNic = :studentNic";
+            Query<Student> query = session.createQuery(hql, Student.class);
+            query.setParameter("studentNic", studentNIC);
+            return query.uniqueResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

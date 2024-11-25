@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.studentmanagementsystem.dto.StudentDTO;
@@ -158,9 +159,34 @@ public class StudentFormController {
         genderComboBox.getSelectionModel().clearSelection();
         txtStudentTel.setText("+94");
         txtStudentEmail.setText("gmail.com");
+        txtStudentId.setDisable(false);
+        btnSave.setDisable(false);
+        btnDeleteStudent.setDisable(false);
     }
 
     public void btnUpdateStudentOnAction(ActionEvent actionEvent) {
+        StudentDTO studentDTO = new StudentDTO(
+                txtStudentId.getText(),
+                txtStudentName.getText(),
+                txtStudentTel.getText(),
+                txtStudentNIC.getText(),
+                txtStudentEmail.getText(),
+                genderComboBox.getValue(),
+                txtStudentAddress.getText(),
+                u1);
+
+        try {
+            if (studentBO.updateStudent(studentDTO)) {
+                new Alert(Alert.AlertType.INFORMATION, "Student updated successfully").show();
+                btnClearStudentOnAction();
+                generateNextStudentId();
+                loadAllStudents();
+            }else{
+                new Alert(Alert.AlertType.ERROR, "Failed to update student").show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void btnDeleteStudentOnAction(ActionEvent actionEvent) {
@@ -186,5 +212,64 @@ public class StudentFormController {
     }
 
     public void btnSearchStudentOnAction(ActionEvent actionEvent) {
+        String studentNIC = txtStudentNIC.getText();
+        try {
+            StudentDTO student = studentBO.searchStudentByNic(studentNIC);
+            if (student != null) {
+                txtStudentId.setText(student.getId());
+                txtStudentName.setText(student.getName());
+                txtStudentTel.setText(student.getPhoneNo());
+                txtStudentNIC.setText(student.getNic());
+                txtStudentEmail.setText(student.getGmail());
+                genderComboBox.setValue(student.getGender());
+                txtStudentAddress.setText(student.getAddress());
+            } else {
+                new Alert(Alert.AlertType.WARNING, "No student found with NIC: " + studentNIC).show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public void txtSearchStudentByIdOnAction(ActionEvent event) {
+        String studentId = txtStudentId.getText();
+        try {
+            StudentDTO student = studentBO.searchStudent(studentId);
+            if (student != null) {
+                txtStudentId.setText(student.getId());
+                txtStudentName.setText(student.getName());
+                txtStudentTel.setText(student.getPhoneNo());
+                txtStudentNIC.setText(student.getNic());
+                txtStudentEmail.setText(student.getGmail());
+                genderComboBox.setValue(student.getGender());
+                txtStudentAddress.setText(student.getAddress());
+            } else {
+                new Alert(Alert.AlertType.WARNING, "No student found with ID: " + studentId).show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void txtSearchStudentByNICOnAction(ActionEvent actionEvent) {
+        String studentNIC = txtStudentNIC.getText();
+        try {
+            StudentDTO student = studentBO.searchStudentByNic(studentNIC);
+            if (student != null) {
+                txtStudentId.setText(student.getId());
+                txtStudentName.setText(student.getName());
+                txtStudentTel.setText(student.getPhoneNo());
+                txtStudentNIC.setText(student.getNic());
+                txtStudentEmail.setText(student.getGmail());
+                genderComboBox.setValue(student.getGender());
+                txtStudentAddress.setText(student.getAddress());
+            } else {
+                new Alert(Alert.AlertType.WARNING, "No student found with NIC: " + studentNIC).show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
