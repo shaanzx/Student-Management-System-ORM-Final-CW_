@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lk.ijse.studentmanagementsystem.dto.StudentDTO;
+import lk.ijse.studentmanagementsystem.dto.UserDTO;
 import lk.ijse.studentmanagementsystem.entity.Student;
 import lk.ijse.studentmanagementsystem.entity.User;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
@@ -43,6 +44,10 @@ public class StudentFormController {
 
     @FXML
     private Button btnUpdate;
+
+    @FXML
+    private Button btnSearch;
+
     @FXML
     private TableColumn<?, ?> colStudentAddress;
 
@@ -135,6 +140,7 @@ public class StudentFormController {
                 new Alert(Alert.AlertType.INFORMATION, "Student saved successfully").show();
                 btnClearStudentOnAction();
                 generateNextStudentId();
+                loadAllStudents();
             }else{
                 new Alert(Alert.AlertType.ERROR, "Failed to save student").show();
             }
@@ -145,7 +151,7 @@ public class StudentFormController {
 
     @FXML
     private void btnClearStudentOnAction() {
-        txtStudentId.clear();
+        generateNextStudentId();
         txtStudentName.clear();
         txtStudentAddress.clear();
         txtStudentNIC.clear();
@@ -177,5 +183,8 @@ public class StudentFormController {
         genderComboBox.setValue(columns.get(5).getCellData(row).toString());
         txtStudentAddress.setText(columns.get(6).getCellData(row).toString());
         tblStudent.setCursor(Cursor.HAND);
+    }
+
+    public void btnSearchStudentOnAction(ActionEvent actionEvent) {
     }
 }

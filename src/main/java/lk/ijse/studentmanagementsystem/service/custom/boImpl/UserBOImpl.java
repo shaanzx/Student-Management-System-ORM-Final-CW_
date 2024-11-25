@@ -10,6 +10,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UserBOImpl implements UserBO {
 
     UserDAO userDAO = DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.USER);
+
     @Override
     public boolean saveUser(UserDTO userDTO) throws Exception {
 
@@ -30,7 +31,14 @@ public class UserBOImpl implements UserBO {
     @Override
     public boolean checkCredential(String useName, String password) {
         User user = userDAO.findByUserName(useName);
-        if(user != null){
+        UserDTO userDTO = new UserDTO(
+                user.getUserId(),
+                user.getUserRole(),
+                user.getUserEmail(),
+                user.getUserMobileNo(),
+                user.getUserName(),
+                user.getUserPassword());
+        if (userDTO != null) {
             return BCrypt.checkpw(password, user.getUserPassword());
         }
         return false;
@@ -43,7 +51,7 @@ public class UserBOImpl implements UserBO {
     }
 
     private String incrementUserId(String lastId) {
-        if (lastId == null){
+        if (lastId == null) {
             return "UID-0001";
         }
         int id = Integer.parseInt(lastId.split("-")[1]);
