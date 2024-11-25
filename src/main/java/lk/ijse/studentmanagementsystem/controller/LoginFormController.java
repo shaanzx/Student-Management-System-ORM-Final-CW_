@@ -86,7 +86,7 @@ public class LoginFormController {
 
     @FXML
     void txtPasswordOnAction(ActionEvent event) {
-        btnSignUp.requestFocus();
+        btnSignIn.requestFocus();
     }
 
     @FXML

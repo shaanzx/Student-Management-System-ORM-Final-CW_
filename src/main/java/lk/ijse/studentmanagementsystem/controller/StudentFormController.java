@@ -20,6 +20,7 @@ import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
 import lk.ijse.studentmanagementsystem.service.custom.UserBO;
 import lk.ijse.studentmanagementsystem.tm.StudentTM;
 import lk.ijse.studentmanagementsystem.util.ClockUtil;
+import lk.ijse.studentmanagementsystem.util.Validation;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -28,8 +29,7 @@ import java.util.ArrayList;
 
 
 public class StudentFormController {
-    @FXML private TextField txtStudentId, txtStudentName, txtStudentTel, txtStudentNIC, txtStudentEmail;
-    @FXML private TextArea txtStudentAddress;
+    @FXML private TextField txtStudentId, txtStudentName, txtStudentTel, txtStudentNIC, txtStudentEmail,txtStudentAddress;
     @FXML private ComboBox<String> genderComboBox;
     @FXML private TableView<StudentTM> tblStudent;
     @FXML private Label timeLabel;
@@ -79,6 +79,28 @@ public class StudentFormController {
         generateNextStudentId();
         setCellValueFactory();
         loadAllStudents();
+        validationIntentFields();
+    }
+
+    private void validationIntentFields() {
+        txtStudentId.textProperty().addListener((observable, oldValue, newValue) -> validateStudentForm());
+        txtStudentName.textProperty().addListener((observable, oldValue, newValue) -> validateStudentForm());
+        txtStudentEmail.textProperty().addListener((observable, oldValue, newValue) -> validateStudentForm());
+        txtStudentTel.textProperty().addListener((observable, oldValue, newValue) -> validateStudentForm());
+        txtStudentNIC.textProperty().addListener((observable, oldValue, newValue) -> validateStudentForm());
+        txtStudentAddress.textProperty().addListener((observable, oldValue, newValue) -> validateStudentForm());
+    }
+
+    private void validateStudentForm() {
+        boolean isValid = Validation.validateAllFields(txtStudentId, txtStudentName, txtStudentEmail, txtStudentTel, txtStudentNIC, txtStudentAddress);
+
+        if (isValid && genderComboBox.getValue() != null) {
+            btnSave.setDisable(false);
+            btnUpdate.setDisable(false); // Disable the update btn
+        } else {
+            btnSave.setDisable(true);
+            btnUpdate.setDisable(true);
+        }
     }
 
     private void loadAllStudents() {
@@ -213,7 +235,7 @@ public class StudentFormController {
     public void tblStudentclickOnAction(MouseEvent mouseEvent) {
         if (txtStudentId != null) {
             btnSave.setDisable(true);
-            btnSearch.setDisable(true);
+            //btnSearch.setDisable(true);
             txtStudentId.setDisable(true);
         }
         TablePosition tp = tblStudent.getSelectionModel().getSelectedCells().get(0);
