@@ -5,10 +5,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -58,6 +55,17 @@ public class Navigation {
     }
 
     public static void switchPaging(Pane pane, String path) throws IOException {
+        pane.getChildren().clear();
+        FXMLLoader fxmlLoader = new FXMLLoader(Navigation.class.getResource("/view/" + path));
+        Parent root = fxmlLoader.load();
+        pane.getChildren().add(root);
+        pane.setTranslateY(0);
+
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), event -> pane.setTranslateY(0)));
+        timeline.play();
+    }
+    public static void switchPaging(StackPane pane, String path) throws IOException {
         pane.getChildren().clear();
         FXMLLoader fxmlLoader = new FXMLLoader(Navigation.class.getResource("/view/" + path));
         Parent root = fxmlLoader.load();

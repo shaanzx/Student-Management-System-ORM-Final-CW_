@@ -43,7 +43,7 @@
         </HBox>
 
         <!-- Form Fields -->
-        <GridPane hgap="20" vgap="15">
+        <GridPane hgap="20" style="-fx-background-color: e5e5e5; -fx-padding: 15; -fx-background-radius: 5;" vgap="15">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.66665649414062" minWidth="100.0" prefWidth="210.66665649414062" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="150.33334350585938" prefWidth="150.33334350585938" />
@@ -63,7 +63,7 @@
             </TextField>
          <Group style="-fx-font-family: sans-serif; -fx-font-size: 14px;" GridPane.rowIndex="2">
             <children>
-               <TextField fx:id="txtCourseDescription" prefHeight="61.0" prefWidth="770.0" promptText="Description" style="-fx-font-family: sans-serif; -fx-font-size: 14px;">
+               <TextField fx:id="txtCourseDescription" prefHeight="61.0" prefWidth="739.0" promptText="Description" style="-fx-font-family: sans-serif; -fx-font-size: 14px;">
                   <effect>
                      <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                   </effect>
@@ -95,7 +95,7 @@
         </GridPane>
 
         <!-- Buttons -->
-        <HBox alignment="CENTER" spacing="15">
+        <HBox alignment="CENTER" prefHeight="71.0" prefWidth="658.0" spacing="15" style="-fx-background-color: e5e5e5; -fx-padding: 15; -fx-background-radius: 5;">
             <Button fx:id="btnSave" alignment="CENTER" onAction="#btnSaveCourseOnAction" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-color: black; -fx-text-fill: #4CAF50; -fx-padding: 12 24; -fx-background-radius: 5;" text="SAVE">
                 <cursor>
                     <Cursor fx:constant="HAND" />

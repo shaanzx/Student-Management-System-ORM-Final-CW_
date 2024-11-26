@@ -68,7 +68,7 @@ public class GlobalFormController implements Initializable {
         Navigation.switchToPage( "login-form.fxml",mainPane);
     }
 
-    private void updateButtonStyles(Button activeButton) {
+    public void updateButtonStyles(Button activeButton) {
         btnHome.setStyle(inactiveStyle);
         btnStudents.setStyle(inactiveStyle);
         btnCourse.setStyle(inactiveStyle);
