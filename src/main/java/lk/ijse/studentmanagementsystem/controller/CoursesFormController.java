@@ -1,7 +1,9 @@
 package lk.ijse.studentmanagementsystem.controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -176,7 +178,21 @@ public class CoursesFormController {
 
     @FXML
     void tblClickOnAction(MouseEvent event) {
-
+        if (txtCourseId != null) {
+            btnSave.setDisable(true);
+            //btnSearch.setDisable(true);
+            txtCourseId.setDisable(true);
+        }
+        TablePosition tp = tblCourses.getSelectionModel().getSelectedCells().get(0);
+        int row = tp.getRow();
+        ObservableList<TableColumn<CourseTM, ?>> columns = tblCourses.getColumns();
+        txtCourseId.setText(columns.get(0).getCellData(row).toString());
+        txtCourseName.setText(columns.get(1).getCellData(row).toString());
+        txtTotalSeats.setText(columns.get(2).getCellData(row).toString());
+        txtCourseDescription.setText(columns.get(3).getCellData(row).toString());
+        txtCourseDuration.setText(columns.get(4).getCellData(row).toString());
+        txtCourseFee.setText(columns.get(5).getCellData(row).toString());
+        tblCourses.setCursor(Cursor.HAND);
     }
 
     @FXML
