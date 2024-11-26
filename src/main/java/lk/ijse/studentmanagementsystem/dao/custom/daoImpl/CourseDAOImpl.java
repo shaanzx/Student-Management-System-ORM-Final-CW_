@@ -53,7 +53,13 @@ public class CourseDAOImpl implements CourseDAO {
 
     @Override
     public ArrayList<Course> getAll() throws Exception {
-        return null;
+        ArrayList<Course> courses = new ArrayList<>();
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            courses = (ArrayList<Course>) session.createQuery("FROM Course").list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courses;
     }
 
     @Override

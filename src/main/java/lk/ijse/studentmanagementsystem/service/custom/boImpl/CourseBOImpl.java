@@ -42,7 +42,19 @@ public class CourseBOImpl implements CourseBO {
 
     @Override
     public ArrayList<CourseDTO> getAllCourses() throws Exception {
-        return null;
+        ArrayList<CourseDTO> courseDTOS = new ArrayList<>();
+        ArrayList<Course> courses = courseDAO.getAll();
+        for (Course course : courses) {
+            courseDTOS.add(new CourseDTO(
+                    course.getCourseId(),
+                    course.getCourseName(),
+                    course.getCourseSeats(),
+                    course.getCourseDescription(),
+                    course.getCourseDuration(),
+                    course.getCourseFee()
+            ));
+        }
+        return courseDTOS;
     }
 
     @Override

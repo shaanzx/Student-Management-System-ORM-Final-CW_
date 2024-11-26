@@ -11,8 +11,8 @@ public class CourseDTO {
       private String courseId;
       private String courseName;
       private int courseSeats;
-      private String courseDuration;
       private String courseDescription;
+      private String courseDuration;
       private String courseFee;
 
 }

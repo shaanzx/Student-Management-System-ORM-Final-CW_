@@ -141,12 +141,12 @@
         <!-- Course Details Table -->
         <TableView fx:id="tblCourses" onMouseClicked="#tblClickOnAction" style="-fx-font-family: sans-serif; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colId" prefWidth="100" text="ID" />
-                <TableColumn fx:id="colName" prefWidth="200" text="Name" />
-            <TableColumn fx:id="colSeats" prefWidth="200" text="Total Seats" />
-                <TableColumn fx:id="colDescription" prefWidth="250" text="Description" />
-                <TableColumn fx:id="colDuration" prefWidth="100" text="Duration" />
-                <TableColumn fx:id="colCourseFee" prefWidth="100" text="Fee" />
+                <TableColumn fx:id="colId" prefWidth="173.33334350585938" text="ID" />
+                <TableColumn fx:id="colName" prefWidth="161.66665649414062" text="Name" />
+            <TableColumn fx:id="colSeats" prefWidth="54.333343505859375" text="Seats" />
+                <TableColumn fx:id="colDescription" prefWidth="234.0" text="Description" />
+                <TableColumn fx:id="colDuration" prefWidth="84.0" text="Duration" />
+                <TableColumn fx:id="colCourseFee" prefWidth="63.3333740234375" text="Fee" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
