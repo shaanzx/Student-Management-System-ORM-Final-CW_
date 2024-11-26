@@ -1,5 +1,6 @@
 package lk.ijse.studentmanagementsystem.dao;
 
+import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.CourseDAOImpl;
 import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.StudentDAOImpl;
 import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.UserDAOImpl;
 
@@ -23,8 +24,8 @@ public class DAOFactory {
                 return (T) new UserDAOImpl();
             case STUDENT:
                 return (T) new StudentDAOImpl();
-//            case COURSE:
-//                return (T) new CourseDAOImpl();
+            case COURSE:
+                return (T) new CourseDAOImpl();
 //            case PAYMENT:
 //                return (T) new PaymentDAOImpl();
 //            case PAYMENT_TYPE:

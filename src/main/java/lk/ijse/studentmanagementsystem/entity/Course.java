@@ -21,8 +21,8 @@ public class Course {
     @Column(name = "course_name")
     private String courseName;
 
-    @Column(name = "course_fee")
-    private double courseFee;
+    @Column(name = "course_seats")
+    private int courseSeats;
 
     @Column(name = "course_duration")
     private String courseDuration;
@@ -30,6 +30,6 @@ public class Course {
     @Column(name = "course_description")
     private String courseDescription;
 
-    @Column(name = "course_seats")
-    private int courseSeats;
+    @Column(name = "course_fee")
+    private String courseFee;
 }

@@ -2,12 +2,11 @@ package lk.ijse.studentmanagementsystem.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import lk.ijse.studentmanagementsystem.dto.CourseDTO;
+import lk.ijse.studentmanagementsystem.service.BOFactory;
+import lk.ijse.studentmanagementsystem.service.custom.CourseBO;
 import lk.ijse.studentmanagementsystem.util.ClockUtil;
 
 public class CoursesFormController {
@@ -69,13 +68,19 @@ public class CoursesFormController {
     @FXML
     private TextField txtTotalSeats;
 
+    CourseBO courseBO = BOFactory.getBoFactory().getBO(BOFactory.BOType.COURSE);
+
     public void initialize(){
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
         generateNextCourserId();
     }
 
     private void generateNextCourserId() {
-        txtCourseId.setText();
+        try {
+            txtCourseId.setText(courseBO.generateNextCourseId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -95,7 +100,29 @@ public class CoursesFormController {
 
     @FXML
     void btnSaveCourseOnAction(ActionEvent event) {
+        int totalSeats = Integer.parseInt(txtTotalSeats.getText().trim());
 
+
+        CourseDTO courseDTO = new CourseDTO(
+                txtCourseId.getText(),
+                txtCourseName.getText(),
+                totalSeats,
+                txtCourseDescription.getText(),
+                txtCourseDuration.getText(),
+                txtCourseFee.getText()
+        );
+
+        try {
+            if (courseBO.saveCourse(courseDTO)) {
+                new Alert(Alert.AlertType.INFORMATION, "Course saved successfully").show();
+                btnClearCourseOnAction(null);
+                generateNextCourserId();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to save course").show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
