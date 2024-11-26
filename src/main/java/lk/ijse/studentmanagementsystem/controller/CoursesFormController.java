@@ -14,6 +14,7 @@ import lk.ijse.studentmanagementsystem.service.custom.CourseBO;
 import lk.ijse.studentmanagementsystem.tm.CourseTM;
 import lk.ijse.studentmanagementsystem.tm.StudentTM;
 import lk.ijse.studentmanagementsystem.util.ClockUtil;
+import lk.ijse.studentmanagementsystem.util.Validation;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -79,11 +80,32 @@ public class CoursesFormController {
 
     CourseBO courseBO = BOFactory.getBoFactory().getBO(BOFactory.BOType.COURSE);
 
-    public void initialize(){
+    public void initialize() {
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
         generateNextCourserId();
         setCellValueFactory();
         loadAllCourses();
+        validationIntentFields();
+    }
+
+    private void validationIntentFields() {
+        txtCourseId.textProperty().addListener((observable, oldValue, newValue) -> validateCourseForm());
+        txtCourseName.textProperty().addListener((observable, oldValue, newValue) -> validateCourseForm());
+        txtTotalSeats.textProperty().addListener((observable, oldValue, newValue) -> validateCourseForm());
+        txtCourseDescription.textProperty().addListener((observable, oldValue, newValue) -> validateCourseForm());
+        txtCourseDuration.textProperty().addListener((observable, oldValue, newValue) -> validateCourseForm());
+        txtCourseFee.textProperty().addListener((observable, oldValue, newValue) -> validateCourseForm());
+    }
+
+    private void validateCourseForm() {
+        boolean isCourseIdValid = Validation.validateCourseFields(txtCourseId, txtCourseName, txtTotalSeats, txtCourseDescription, txtCourseDuration, txtCourseFee);
+        if (isCourseIdValid) {
+            btnSave.setDisable(false);
+            btnUpdate.setDisable(false);
+        }else {
+            btnSave.setDisable(true);
+            btnUpdate.setDisable(true);
+        }
     }
 
     private void loadAllCourses() {
@@ -138,8 +160,40 @@ public class CoursesFormController {
 
     @FXML
     void btnDeleteCourseOnAction(ActionEvent event) {
+        txtCourseId.setDisable(false);
+        String courseId = txtCourseId.getText().trim();
 
+        if (courseId.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please enter a Course ID").show();
+            return;
+        }
+
+        try {
+            if (!courseBO.isCourseExists(courseId)) {
+                new Alert(Alert.AlertType.ERROR, "Course does not exist").show();
+                return;
+            }
+
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this course?", ButtonType.YES, ButtonType.NO);
+            confirmation.setTitle("Delete Confirmation");
+            confirmation.setHeaderText(null);
+
+            ButtonType result = confirmation.showAndWait().orElse(ButtonType.NO);
+            if (result == ButtonType.YES) {
+                if (courseBO.deleteCourse(courseId)) {
+                    new Alert(Alert.AlertType.INFORMATION, "Course deleted successfully").show();
+                    btnClearCourseOnAction(null);
+                    generateNextCourserId();
+                    loadAllCourses();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to delete course").show();
+                }
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "An error occurred while deleting the course: " + e.getMessage()).show();
+        }
     }
+
 
     @FXML
     void btnSaveCourseOnAction(ActionEvent event) {
@@ -171,7 +225,28 @@ public class CoursesFormController {
 
     @FXML
     void btnSearchCourseOnAction(ActionEvent event) {
+        String courseId = txtCourseId.getText().trim();
 
+        if (courseId == null || courseId.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please enter a Course ID").show();
+            return;
+        }
+
+        try {
+            CourseDTO course = courseBO.searchCourse(courseId);
+            if (course != null) {
+                txtCourseId.setText(course.getCourseId());
+                txtCourseName.setText(course.getCourseName());
+                txtTotalSeats.setText(String.valueOf(course.getCourseSeats()));
+                txtCourseDescription.setText(course.getCourseDescription());
+                txtCourseDuration.setText(course.getCourseDuration());
+                txtCourseFee.setText(course.getCourseFee());
+            } else {
+                new Alert(Alert.AlertType.WARNING, "No course found with ID: " + courseId).show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -221,7 +296,7 @@ public class CoursesFormController {
 
     @FXML
     void txtSearchCourseById(ActionEvent event) {
-
+        btnSearchCourseOnAction(null);
     }
 
 }

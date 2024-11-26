@@ -39,12 +39,20 @@ public class CourseBOImpl implements CourseBO {
 
     @Override
     public boolean deleteCourse(String courseId) throws Exception {
-        return false;
+        return courseDAO.delete(courseId);
     }
 
     @Override
     public CourseDTO searchCourse(String courseId) throws Exception {
-        return null;
+        Course course = courseDAO.search(courseId);
+        return new CourseDTO(
+                course.getCourseId(),
+                course.getCourseName(),
+                course.getCourseSeats(),
+                course.getCourseDescription(),
+                course.getCourseDuration(),
+                course.getCourseFee()
+        );
     }
 
     @Override
@@ -73,6 +81,11 @@ public class CourseBOImpl implements CourseBO {
     public String generateNextCourseId() throws Exception {
         String lastId = courseDAO.getLastId();
         return IncrementCourseId(lastId);
+    }
+
+    @Override
+    public boolean isCourseExists(String CourseId) throws Exception {
+        return courseDAO.isCourseExists(CourseId);
     }
 
     private String IncrementCourseId(String lastId) {

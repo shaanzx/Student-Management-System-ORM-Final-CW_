@@ -19,4 +19,6 @@ public interface CourseBO extends SuperBO {
     boolean loadIds(String id) throws Exception;
 
     String generateNextCourseId() throws Exception;
+
+    boolean isCourseExists(String CourseId) throws Exception;
 }

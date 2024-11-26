@@ -82,7 +82,6 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public Student search(String id) throws Exception {
         try(Session session = SessionFactoryConfig.getInstance().getSession()){
-            System.out.println(session.get(Student.class, id));
             return session.get(Student.class, id);
         }catch (Exception e){
             e.printStackTrace();

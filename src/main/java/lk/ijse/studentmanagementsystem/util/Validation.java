@@ -13,6 +13,14 @@ public class Validation {
     public static final String ADDRESS_PATTERN = "^[A-Za-z0-9 ]{3,50}$";
     public static final String PASSWORD_PATTERN = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#$%^&*(),.?\":{}|<>]{6,}$";// Password: Minimum 6 characters, 1 letter, 1 number, 1 symbol (e.g., @, #, $, etc.)
 
+    public static final String COURSE_ID_PATTERN = "^REG-COOK-\\d{4}-\\d{4}$";
+    public static final String COURSE_NAME_PATTERN = "^[A-Za-z ]{3,50}$";
+    public static final String COURSE_SEATS_PATTERN = "^\\d{1,3}$";
+    public static final String DESCRIPTION_PATTERN = "^[A-Za-z0-9 ]{3,200}$";
+    public static final String DURATION_PATTERN = "^\\d{2} Months$";
+    public static final String COURSE_FEE_PATTERN = "^Rs\\.\\d{1,8}$";
+
+
 
     public static boolean validateField(TextField textField , String pattern) {
         boolean isValid = textField.getText().matches(pattern);
@@ -53,5 +61,17 @@ public class Validation {
         boolean isPasswordValid = validateField(passwordField, PASSWORD_PATTERN);
 
         return isUserNameValid && isPasswordValid;
+    }
+
+    //Course Validation
+    public static boolean validateCourseFields(TextField courseIdField, TextField courseNameField, TextField totalSeatsField, TextField descriptionField, TextField durationField, TextField feeField) {
+        boolean isCourseIdValid = validateField(courseIdField, COURSE_ID_PATTERN);
+        boolean isCourseNameValid = validateField(courseNameField, COURSE_NAME_PATTERN);
+        boolean isTotalSeatsValid = validateField(totalSeatsField, COURSE_SEATS_PATTERN);
+        boolean isDescriptionValid = validateField(descriptionField, DESCRIPTION_PATTERN);
+        boolean isDurationValid = validateField(durationField, DURATION_PATTERN);
+        boolean isFeeValid = validateField(feeField, COURSE_FEE_PATTERN);
+
+        return isCourseIdValid && isCourseNameValid && isTotalSeatsValid && isDescriptionValid && isDurationValid && isFeeValid;
     }
 }

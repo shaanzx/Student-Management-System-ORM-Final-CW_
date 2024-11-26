@@ -187,7 +187,6 @@ public class StudentFormController {
         }
     }
 
-
     @FXML
     private void btnClearStudentOnAction() {
         generateNextStudentId();

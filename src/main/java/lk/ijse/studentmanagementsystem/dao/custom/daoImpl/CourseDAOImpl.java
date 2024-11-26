@@ -51,13 +51,28 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public boolean delete(String id) throws Exception {
-        return false;
+    public boolean delete(String CourseId) throws Exception {
+        System.out.println(CourseId);
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.delete(search(CourseId));
+            transaction.commit();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public Course search(String id) throws Exception {
-        return null;
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            return session.get(Course.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -74,5 +89,19 @@ public class CourseDAOImpl implements CourseDAO {
     @Override
     public ArrayList<String> loadIds() throws Exception {
         return null;
+    }
+
+    @Override
+    public boolean isCourseExists(String courseId) {
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            String hql = "SELECT c FROM Course c WHERE c.courseId = :courseId";
+            Query<Course> query = session.createQuery(hql, Course.class);
+            query.setParameter("courseId", courseId);
+            Course course = query.uniqueResult();
+            return course != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
