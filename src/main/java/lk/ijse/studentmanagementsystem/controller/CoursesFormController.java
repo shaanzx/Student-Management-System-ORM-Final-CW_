@@ -1,20 +1,14 @@
 package lk.ijse.studentmanagementsystem.controller;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.util.Duration;
+import javafx.scene.input.MouseEvent;
 import lk.ijse.studentmanagementsystem.util.ClockUtil;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 public class CoursesFormController {
 
@@ -28,63 +22,70 @@ public class CoursesFormController {
     private Button btnSave;
 
     @FXML
+    private Button btnSearch;
+
+    @FXML
     private Button btnUpdate;
 
     @FXML
-    private TextField courseDurationField;
+    private TableColumn<?, ?> colCourseFee;
 
     @FXML
-    private TextField courseFeeField;
+    private TableColumn<?, ?> colDescription;
 
     @FXML
-    private TextField courseIdField;
+    private TableColumn<?, ?> colDuration;
 
     @FXML
-    private TextField courseNameField;
+    private TableColumn<?, ?> colId;
 
     @FXML
-    private TableView<?> courseTable;
+    private TableColumn<?, ?> colName;
 
     @FXML
-    private TableColumn<?, ?> descriptionColumn;
+    private TableColumn<?, ?> colSeats;
 
     @FXML
-    private TextArea descriptionField;
-
-    @FXML
-    private TableColumn<?, ?> durationColumn;
-
-    @FXML
-    private TableColumn<?, ?> feeColumn;
-
-    @FXML
-    private TableColumn<?, ?> idColumn;
-
-    @FXML
-    private TableColumn<?, ?> nameColumn;
+    private TableView<?> tblCourses;
 
     @FXML
     private Label timeLabel;
 
-    public void initialize() {
+    @FXML
+    private TextField txtCourseDescription;
 
-        // Set up table columns
-        // ...
+    @FXML
+    private TextField txtCourseDuration;
 
-        // Set up time display
+    @FXML
+    private TextField txtCourseFee;
+
+    @FXML
+    private TextField txtCourseId;
+
+    @FXML
+    private TextField txtCourseName;
+
+    @FXML
+    private TextField txtTotalSeats;
+
+    public void initialize(){
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
+        generateNextCourserId();
+    }
 
+    private void generateNextCourserId() {
+        txtCourseId.setText();
     }
 
     @FXML
     void btnClearCourseOnAction(ActionEvent event) {
-        courseIdField.clear();
-        courseNameField.clear();
-        descriptionField.clear();
-        courseFeeField.clear();
-        courseDurationField.clear();
-        courseFeeField.setText("Rs.");
-        courseDurationField.setText("Month");
+        txtCourseId.clear();
+        txtCourseName.clear();
+        txtTotalSeats.clear();
+        txtCourseDescription.clear();
+        txtCourseDuration.setText("Month");
+        txtCourseFee.setText("Rs.");
     }
 
     @FXML
@@ -98,7 +99,22 @@ public class CoursesFormController {
     }
 
     @FXML
+    void btnSearchCourseOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
     void btnUpdateCourseOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void tblClickOnAction(MouseEvent event) {
+
+    }
+
+    @FXML
+    void txtSearchCourseById(ActionEvent event) {
 
     }
 

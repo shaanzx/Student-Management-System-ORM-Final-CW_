@@ -96,7 +96,7 @@
         </HBox>
 
         <!-- Student Details Table -->
-        <TableView fx:id="tblStudent" onMouseClicked="#tblStudentclickOnAction" style="-fx-font-family: Calibri; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tblStudent" onMouseClicked="#tblStudentclickOnAction" style="-fx-font-family: sans-serif; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colStudentId" prefWidth="100" text="ID" />
                 <TableColumn fx:id="colStudentName" prefWidth="150" text="Name" />
