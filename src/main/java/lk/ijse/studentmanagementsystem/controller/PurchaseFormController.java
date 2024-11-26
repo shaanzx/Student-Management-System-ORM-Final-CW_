@@ -10,6 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import lk.ijse.studentmanagementsystem.service.BOFactory;
+import lk.ijse.studentmanagementsystem.service.custom.PaymentBo;
 import lk.ijse.studentmanagementsystem.util.ClockUtil;
 
 public class PurchaseFormController {
@@ -110,13 +112,18 @@ public class PurchaseFormController {
     @FXML
     private TextField txtTotalAmount;
 
+    PaymentBo paymentBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.PAYMENT);
     public void initialize() {
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
         generateNextPurchaseId();
     }
 
     private void generateNextPurchaseId() {
-
+        try {
+            txtPurchaseId.setText(paymentBo.generateNextPurchaseId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
