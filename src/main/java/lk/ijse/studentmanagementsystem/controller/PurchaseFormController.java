@@ -1,18 +1,21 @@
 package lk.ijse.studentmanagementsystem.controller;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import lk.ijse.studentmanagementsystem.dto.CourseDTO;
+import lk.ijse.studentmanagementsystem.dto.StudentDTO;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
+import lk.ijse.studentmanagementsystem.service.custom.CourseBO;
 import lk.ijse.studentmanagementsystem.service.custom.PaymentBo;
+import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
 import lk.ijse.studentmanagementsystem.util.ClockUtil;
+
+import java.util.ArrayList;
 
 public class PurchaseFormController {
 
@@ -38,7 +41,7 @@ public class PurchaseFormController {
     private Button btnShowPurchaseDetails;
 
     @FXML
-    private ComboBox<?> cmbSelectCourse;
+    private ComboBox<String> cmbSelectCourse;
 
     @FXML
     private TableColumn<?, ?> colAdvance;
@@ -113,9 +116,29 @@ public class PurchaseFormController {
     private TextField txtTotalAmount;
 
     PaymentBo paymentBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.PAYMENT);
+    CourseBO courseBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.COURSE);
+    StudentBO studentBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.STUDENT);
+
     public void initialize() {
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
         generateNextPurchaseId();
+        loadAllCourses();
+    }
+
+    private void loadAllCourses() {
+        ObservableList<String> courseIds = FXCollections.observableArrayList();
+
+        try {
+            ArrayList<CourseDTO> allCourses = courseBo.getAllCourses();
+
+            for (CourseDTO course : allCourses) {
+                courseIds.add(course.getCourseId());
+            }
+
+            cmbSelectCourse.setItems(courseIds);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void generateNextPurchaseId() {
@@ -148,7 +171,16 @@ public class PurchaseFormController {
 
     @FXML
     void btnSearchStudentByNicOnAction(ActionEvent event) {
+        try {
+            StudentDTO studentDTO = studentBo.searchStudentByNic(txtStudentNIC.getText());
+            txtStudentName.setText(studentDTO.getName());
+            txtStudentTel.setText(studentDTO.getPhoneNo());
+            txtStudentEmail.setText(studentDTO.getGmail());
 
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.WARNING, "No student found with NIC: " + txtStudentNIC.getText()).show();
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -158,7 +190,15 @@ public class PurchaseFormController {
 
     @FXML
     void cmbSelectCourseOnAction(ActionEvent event) {
-
+        try {
+            CourseDTO courseDTO = courseBo.searchCourse(cmbSelectCourse.getValue());
+            txtCourseId.setText(courseDTO.getCourseName());
+            txtCourseFee.setText(String.valueOf(courseDTO.getCourseFee()));
+            txtCourseDuration.setText(String.valueOf(courseDTO.getCourseDuration()));
+            txtAvailableSeats.setText(String.valueOf(courseDTO.getCourseSeats()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
