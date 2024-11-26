@@ -126,12 +126,14 @@ public class CoursesFormController {
 
     @FXML
     void btnClearCourseOnAction(ActionEvent event) {
-        txtCourseId.clear();
+        generateNextCourserId();
         txtCourseName.clear();
         txtTotalSeats.clear();
         txtCourseDescription.clear();
         txtCourseDuration.setText("Month");
         txtCourseFee.setText("Rs.");
+        btnSave.setDisable(false);
+        txtCourseId.setDisable(false);
     }
 
     @FXML
@@ -158,6 +160,7 @@ public class CoursesFormController {
                 new Alert(Alert.AlertType.INFORMATION, "Course saved successfully").show();
                 btnClearCourseOnAction(null);
                 generateNextCourserId();
+                loadAllCourses();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to save course").show();
             }
@@ -173,7 +176,28 @@ public class CoursesFormController {
 
     @FXML
     void btnUpdateCourseOnAction(ActionEvent event) {
+        CourseDTO courseDTO = new CourseDTO(
+                txtCourseId.getText(),
+                txtCourseName.getText(),
+                Integer.parseInt(txtTotalSeats.getText()),
+                txtCourseDescription.getText(),
+                txtCourseDuration.getText(),
+                txtCourseFee.getText()
+        );
 
+        try {
+            if (courseBO.updateCourse(courseDTO)) {
+                new Alert(Alert.AlertType.INFORMATION, "Course updated successfully").show();
+                btnClearCourseOnAction(null);
+                generateNextCourserId();
+                loadAllCourses();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to update course").show();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

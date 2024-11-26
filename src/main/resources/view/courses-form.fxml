@@ -51,19 +51,19 @@
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="158.66668701171875" prefWidth="158.66668701171875" />
             </columnConstraints>
 
-            <TextField fx:id="txtCourseId" onAction="#txtSearchCourseById" prefHeight="39.0" prefWidth="182.0" promptText="Course ID" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <TextField fx:id="txtCourseId" onAction="#txtSearchCourseById" prefHeight="39.0" prefWidth="182.0" promptText="Course ID" style="-fx-font-family: sans-serif; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                 <effect>
                     <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                 </effect>
             </TextField>
-            <TextField fx:id="txtCourseName" prefHeight="39.0" prefWidth="260.0" promptText="Course Name" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="0">
+            <TextField fx:id="txtCourseName" prefHeight="39.0" prefWidth="260.0" promptText="Course Name" style="-fx-font-family: sans-serif; -fx-font-size: 14px;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="0">
                 <effect>
                     <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                 </effect>
             </TextField>
-         <Group GridPane.rowIndex="2">
+         <Group style="-fx-font-family: sans-serif; -fx-font-size: 14px;" GridPane.rowIndex="2">
             <children>
-               <TextField fx:id="txtCourseDescription" prefHeight="61.0" prefWidth="770.0" promptText="Description" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;">
+               <TextField fx:id="txtCourseDescription" prefHeight="61.0" prefWidth="770.0" promptText="Description" style="-fx-font-family: sans-serif; -fx-font-size: 14px;">
                   <effect>
                      <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                   </effect>
@@ -71,17 +71,17 @@
             </children>
          </Group>
 
-            <TextField fx:id="txtCourseDuration" alignment="CENTER_RIGHT" promptText="Course Duration" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" text="Month" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <TextField fx:id="txtCourseDuration" alignment="CENTER_RIGHT" promptText="Course Duration" style="-fx-font-family: sans-serif; -fx-font-size: 14px;" text="Months" GridPane.columnSpan="2" GridPane.rowIndex="3">
                 <effect>
                     <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                 </effect>
             </TextField>
-            <TextField fx:id="txtCourseFee" promptText="Course Fee" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" text="Rs." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <TextField fx:id="txtCourseFee" promptText="Course Fee" style="-fx-font-family: sans-serif; -fx-font-size: 14px;" text="Rs." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
                 <effect>
                     <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                 </effect>
             </TextField>
-         <TextField fx:id="txtTotalSeats" layoutX="157.0" layoutY="10.0" prefHeight="39.0" prefWidth="260.0" promptText="Total Seats" style="-fx-font-family: Impact; -fx-font-size: 14px; -fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;" GridPane.columnIndex="3">
+         <TextField fx:id="txtTotalSeats" layoutX="157.0" layoutY="10.0" prefHeight="39.0" prefWidth="260.0" promptText="Total Seats" style="-fx-font-family: sans-serif; -fx-font-size: 14px;" GridPane.columnIndex="3">
             <effect>
                <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
             </effect>
@@ -141,12 +141,12 @@
         <!-- Course Details Table -->
         <TableView fx:id="tblCourses" onMouseClicked="#tblClickOnAction" style="-fx-font-family: sans-serif; -fx-font-size: 14px; -fx-background-color: #ddd; -fx-border-color: #aaa; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colId" prefWidth="173.33334350585938" text="ID" />
-                <TableColumn fx:id="colName" prefWidth="161.66665649414062" text="Name" />
-            <TableColumn fx:id="colSeats" prefWidth="54.333343505859375" text="Seats" />
-                <TableColumn fx:id="colDescription" prefWidth="234.0" text="Description" />
-                <TableColumn fx:id="colDuration" prefWidth="84.0" text="Duration" />
-                <TableColumn fx:id="colCourseFee" prefWidth="63.3333740234375" text="Fee" />
+                <TableColumn fx:id="colId" prefWidth="161.3333282470703" text="ID" />
+                <TableColumn fx:id="colName" prefWidth="171.6666717529297" text="Name" />
+            <TableColumn fx:id="colSeats" prefWidth="43.666656494140625" text="Seats" />
+                <TableColumn fx:id="colDescription" prefWidth="197.6666259765625" text="Description" />
+                <TableColumn fx:id="colDuration" prefWidth="90.3333740234375" text="Duration" />
+                <TableColumn fx:id="colCourseFee" prefWidth="101.0" text="Fee" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

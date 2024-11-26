@@ -24,11 +24,11 @@ public class Course {
     @Column(name = "course_seats")
     private int courseSeats;
 
-    @Column(name = "course_duration")
-    private String courseDuration;
-
     @Column(name = "course_description")
     private String courseDescription;
+
+    @Column(name = "course_duration")
+    private String courseDuration;
 
     @Column(name = "course_fee")
     private String courseFee;

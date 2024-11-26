@@ -27,7 +27,14 @@ public class CourseBOImpl implements CourseBO {
 
     @Override
     public boolean updateCourse(CourseDTO courseDTO) throws Exception {
-        return false;
+        return courseDAO.update(new Course(
+                courseDTO.getCourseId(),
+                courseDTO.getCourseName(),
+                courseDTO.getCourseSeats(),
+                courseDTO.getCourseDescription(),
+                courseDTO.getCourseDuration(),
+                courseDTO.getCourseFee()
+        ));
     }
 
     @Override
