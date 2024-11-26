@@ -1,105 +1,161 @@
 package lk.ijse.studentmanagementsystem.controller;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.util.Duration;
+import javafx.scene.input.MouseEvent;
 import lk.ijse.studentmanagementsystem.util.ClockUtil;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 public class PurchaseFormController {
 
     @FXML
-    private TableColumn<?, ?> advanceColumn;
+    private TableColumn<?, ?> CourseFee;
 
     @FXML
-    private TextField advancePaymentField;
+    private Button btnAddNewCourse;
 
     @FXML
-    private TableColumn<?, ?> balanceColumn;
+    private Button btnAddNewStudent;
 
     @FXML
-    private TextField balanceField;
+    private Button btnAddToCart;
 
     @FXML
-    private TableView<?> courseDetailsTable;
+    private Button btnBuyCourse;
 
     @FXML
-    private TextField courseDurationField;
+    private Button btnSearch;
 
     @FXML
-    private TextField courseFeeField;
+    private Button btnShowPurchaseDetails;
 
     @FXML
-    private TableColumn<?, ?> courseIdColumn;
+    private ComboBox<?> cmbSelectCourse;
 
     @FXML
-    private TextField courseIdField;
+    private TableColumn<?, ?> colAdvance;
 
     @FXML
-    private TableColumn<?, ?> courseNameColumn;
+    private TableColumn<?, ?> colBalance;
 
     @FXML
-    private ComboBox<?> courseNameComboBox;
+    private TableColumn<?, ?> colCourseId;
 
     @FXML
-    private TableColumn<?, ?> durationColumn;
+    private TableColumn<?, ?> colPaymentDate;
 
     @FXML
-    private TableColumn<?, ?> feeColumn;
+    private TableColumn<?, ?> colPurchaseID;
 
     @FXML
-    private DatePicker purchaseDatePicker;
+    private TableColumn<?, ?> colStudentId;
 
     @FXML
-    private TextField purchaseIdField;
+    private Label lblShowEnoughMoney;
 
     @FXML
-    private TextField studentEmailField;
-
-    @FXML
-    private TextField studentNameField;
-
-    @FXML
-    private TextField studentNicField;
-
-    @FXML
-    private TextField studentTelField;
+    private TableView<?> tblAddToCart;
 
     @FXML
     private Label timeLabel;
 
+    @FXML
+    private TextField txtAdvancePayment;
+
+    @FXML
+    private TextField txtAvailableSeats;
+
+    @FXML
+    private TextField txtCourseDuration;
+
+    @FXML
+    private TextField txtCourseFee;
+
+    @FXML
+    private TextField txtCourseFeeBalance;
+
+    @FXML
+    private TextField txtCourseId;
+
+    @FXML
+    private TextField txtCustomerPaymentAmount;
+
+    @FXML
+    private TextField txtCustomerPaymentBalance;
+
+    @FXML
+    private DatePicker txtPurchaseDate;
+
+    @FXML
+    private TextField txtPurchaseId;
+
+    @FXML
+    private TextField txtStudentEmail;
+
+    @FXML
+    private TextField txtStudentNIC;
+
+    @FXML
+    private TextField txtStudentName;
+
+    @FXML
+    private TextField txtStudentTel;
+
+    @FXML
+    private TextField txtTotalAmount;
+
     public void initialize() {
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
+        generateNextPurchaseId();
+    }
+
+    private void generateNextPurchaseId() {
 
     }
 
     @FXML
-    void addPurchaseDetails(ActionEvent event) {
+    void btnAddNewCourseOnAction(ActionEvent event) {
 
     }
 
     @FXML
-    void addToCart(ActionEvent event) {
+    void btnAddNewStudentOnAction(ActionEvent event) {
 
     }
 
     @FXML
-    void buyCourse(ActionEvent event) {
+    void btnAddToCartOnAction(ActionEvent event) {
 
     }
 
     @FXML
-    void searchStudent(ActionEvent event) {
+    void btnBuyCourseOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnSearchStudentByNicOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnShowPurchaseDetailsOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cmbSelectCourseOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void lblShowEnoughMoneyOnAction(MouseEvent event) {
 
     }
 

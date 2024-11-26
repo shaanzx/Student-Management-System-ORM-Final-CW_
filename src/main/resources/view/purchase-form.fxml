@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -13,10 +14,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
 <StackPane prefHeight="650" prefWidth="830" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.studentmanagementsystem.controller.PurchaseFormController">
 
-    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
+    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 30 30 10 30; -fx-background-radius: 10;">
         <effect>
             <DropShadow color="#00000022" radius="10" spread="0.1" />
         </effect>
@@ -32,59 +34,92 @@
         </HBox>
 
         <!-- Course Details Form -->
-        <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 5;">
-            <Label style="-fx-font-family: 'Impact'; -fx-font-size: 18px; -fx-text-fill: #333;" text="Course Details" />
+        <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10 15; -fx-background-radius: 5;">
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+                  <Label style="-fx-font-family: 'Impact'; -fx-font-size: 18px; -fx-text-fill: #333;" text="Course Details" />
+               <Region prefHeight="27.0" prefWidth="520.0" />
+               <Button fx:id="btnAddNewCourse" onAction="#btnAddNewCourseOnAction" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-background-color: black; -fx-text-fill: white;" text="Add New Course" />
+            </children>
+         </HBox>
             <HBox spacing="10">
-                <ComboBox fx:id="courseNameComboBox" promptText="Select Course" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="courseIdField" editable="false" promptText="Course ID" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="courseFeeField" editable="false" promptText="Course Fee" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="courseDurationField" editable="false" promptText="Duration" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="cmbSelectCourse" onAction="#cmbSelectCourseOnAction" promptText="Select Course" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtCourseId" editable="false" prefHeight="27.0" prefWidth="181.0" promptText="Course ID" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtCourseFee" editable="false" prefHeight="27.0" prefWidth="59.0" promptText="Course Fee" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtCourseDuration" editable="false" prefHeight="27.0" prefWidth="64.0" promptText="Duration" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="txtAvailableSeats" editable="false" layoutX="490.0" layoutY="10.0" prefHeight="27.0" prefWidth="110.0" promptText="Available Seats" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" />
             </HBox>
         </VBox>
 
         <!-- Student Details Form -->
-        <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 5;">
-            <Label style="-fx-font-family: 'Impact'; -fx-font-size: 18px; -fx-text-fill: #333;" text="Student Details" />
+        <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10 15; -fx-background-radius: 5;">
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+                  <Label style="-fx-font-family: 'Impact'; -fx-font-size: 18px; -fx-text-fill: #333;" text="Student Details" />
+               <Region prefHeight="27.0" prefWidth="512.0" />
+               <Button fx:id="btnAddNewStudent" layoutX="635.0" layoutY="10.0" onAction="#btnAddNewStudentOnAction" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-background-color: black; -fx-text-fill: white;" text="Add New Student" />
+            </children>
+         </HBox>
             <HBox spacing="10">
-                <TextField fx:id="studentNicField" promptText="NIC No" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <Button onAction="#searchStudent" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-background-color: black; -fx-text-fill: #4CAF50;" text="Search" />
+                <TextField fx:id="txtStudentNIC" promptText="NIC No" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnSearch" layoutX="691.0" layoutY="10.0" onAction="#btnSearchStudentByNicOnAction" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-background-color: black; -fx-text-fill: #4CAF50;" text="Search" />
             </HBox>
             <HBox spacing="10">
-                <TextField fx:id="studentNameField" editable="false" promptText="Student Name" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="studentTelField" editable="false" promptText="Student Tel" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="studentEmailField" editable="false" promptText="Student Email" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtStudentName" editable="false" promptText="Student Name" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtStudentTel" editable="false" promptText="Student Tel" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtStudentEmail" editable="false" promptText="Student Email" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
             </HBox>
         </VBox>
 
         <!-- Purchase Form -->
-        <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 5;">
+        <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10 15; -fx-background-radius: 5;">
             <Label style="-fx-font-family: 'Impact'; -fx-font-size: 18px; -fx-text-fill: #333;" text="Purchase Details" />
             <HBox spacing="10">
-                <TextField fx:id="purchaseIdField" promptText="Purchase ID" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="advancePaymentField" promptText="Advance Payment" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="balanceField" editable="false" promptText="Balance" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <DatePicker fx:id="purchaseDatePicker" promptText="Date" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtPurchaseId" promptText="Purchase ID" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtAdvancePayment" promptText="Advance Payment" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtCourseFeeBalance" editable="false" promptText="Balance" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <DatePicker fx:id="txtPurchaseDate" promptText="Date" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
             </HBox>
-            <Button onAction="#addToCart" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-background-color: black; -fx-text-fill: #2196F3;" text="Add to Cart" />
+            <Button fx:id="btnAddToCart" onAction="#btnAddToCartOnAction" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-background-color: black; -fx-text-fill: #2196F3;" text="Add to Cart" />
         </VBox>
 
         <!-- Course Details Table -->
-        <TableView fx:id="courseDetailsTable" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" VBox.vgrow="ALWAYS">
-            <columns>
-                <TableColumn fx:id="courseNameColumn" text="Course Name" />
-                <TableColumn fx:id="courseIdColumn" text="Course ID" />
-                <TableColumn fx:id="feeColumn" text="Fee" />
-                <TableColumn fx:id="durationColumn" text="Duration" />
-                <TableColumn fx:id="advanceColumn" text="Advance" />
-                <TableColumn fx:id="balanceColumn" text="Balance" />
-            </columns>
-        </TableView>
-
-        <!-- Buy Course and Purchase Details Buttons in One Row -->
-        <HBox alignment="TOP_RIGHT" spacing="10">
-            <Button onAction="#buyCourse" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #4CAF50; -fx-padding: 10 20;" text="Buy Course" />
-            <Button onAction="#addPurchaseDetails" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #FF9800; -fx-padding: 10 20;" text="Add Purchase Details" />
-        </HBox>
+        <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblAddToCart" prefHeight="313.0" prefWidth="768.0" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;">
+                <columns>
+                    <TableColumn fx:id="colPurchaseID" prefWidth="95.99999237060547" text="Purchase ID" />
+                    <TableColumn fx:id="colStudentId" prefWidth="95.99999237060547" text="Student ID" />
+                    <TableColumn fx:id="colCourseId" prefWidth="170.33334350585938" text="Course ID" />
+                    <TableColumn fx:id="CourseFee" prefWidth="81.66665649414062" text="Course Fee" />
+                    <TableColumn fx:id="colAdvance" prefWidth="103.33331298828125" text="Advance" />
+                    <TableColumn fx:id="colBalance" prefWidth="116.66665649414062" text="Balance" />
+                    <TableColumn fx:id="colPaymentDate" prefWidth="106.66668701171875" text="Payment Date" />
+                </columns>
+            </TableView>
+        </ScrollPane>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #f0f0f0; -fx-border-radius: 5; -fx-padding: 10 15;">
+         <children>
+      
+              <!-- Buy Course and Purchase Details Buttons in One Row -->
+              <HBox alignment="CENTER_RIGHT" prefHeight="108.0" prefWidth="770.0" spacing="10" style="-fx-padding: 0 0 10 0; -fx-alignment: bottom;">
+               <TextField fx:id="txtTotalAmount" prefHeight="8.0" prefWidth="100.0" promptText="Total Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
+               <TextField fx:id="txtCustomerPaymentAmount" layoutX="313.0" layoutY="10.0" prefHeight="1.0" prefWidth="114.0" promptText="Payment Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
+               <TextField fx:id="txtCustomerPaymentBalance" layoutX="303.0" layoutY="20.0" prefHeight="0.0" prefWidth="114.0" promptText="Balance Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
+                  <Button fx:id="btnBuyCourse" onAction="#btnBuyCourseOnAction" prefHeight="41.0" prefWidth="150.0" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #4CAF50; -fx-padding: 10 20;" text="Buy Course" />
+                  <Button fx:id="btnShowPurchaseDetails" onAction="#btnShowPurchaseDetailsOnAction" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #FF9800; -fx-padding: 10 20;" text="Show Purchase Details" />
+              </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Region prefHeight="16.0" prefWidth="152.0" />
+                  <Label fx:id="lblShowEnoughMoney" onDragDetected="#lblShowEnoughMoneyOnAction" prefHeight="16.0" prefWidth="342.0" text="Need Money" textFill="#ff0202">
+                     <font>
+                        <Font name="Impact" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
 
     </VBox>
 </StackPane>

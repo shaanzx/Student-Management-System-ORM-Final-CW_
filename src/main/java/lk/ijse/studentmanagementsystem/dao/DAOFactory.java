@@ -2,6 +2,7 @@ package lk.ijse.studentmanagementsystem.dao;
 
 import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.CourseDAOImpl;
 import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.StudentDAOImpl;
+import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.Student_CourseDAOImpl;
 import lk.ijse.studentmanagementsystem.dao.custom.daoImpl.UserDAOImpl;
 
 public class DAOFactory {
@@ -15,7 +16,7 @@ public class DAOFactory {
     }
 
     public enum DAOType {
-        USER, STUDENT, COURSE, PAYMENT, PAYMENT_TYPE
+        USER, STUDENT, COURSE, STUDENT_COURSE, PAYMENT
     }
 
     public <T extends SuperDAO> T getDAO(DAOType daoType) {
@@ -26,10 +27,10 @@ public class DAOFactory {
                 return (T) new StudentDAOImpl();
             case COURSE:
                 return (T) new CourseDAOImpl();
-//            case PAYMENT:
-//                return (T) new PaymentDAOImpl();
-//            case PAYMENT_TYPE:
-//                return (T) new PaymentTypeDAOImpl();
+            case STUDENT_COURSE:
+                return (T) new Student_CourseDAOImpl();
+            case PAYMENT:
+                return (T) new Student_CourseDAOImpl();
             default:
                 return null;
         }
