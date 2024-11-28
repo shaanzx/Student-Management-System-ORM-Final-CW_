@@ -44,7 +44,7 @@ public class CourseDAOImpl implements CourseDAO {
             session.update(entity);
             transaction.commit();
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -106,14 +106,13 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public boolean updateSeats(String courseId) throws Exception {
-        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
-            Transaction transaction = session.beginTransaction();
-            Course course = search(courseId);
-            course.setCourseSeats(course.getCourseSeats() - 1);
-            session.update(course);
-            transaction.commit();
-            return true;
+    public boolean updateCourseSeats(String courseId, Session session) {
+        try {
+            String hql = "UPDATE Course c SET c.courseSeats = c.courseSeats - 1 WHERE c.courseId = :courseId";
+            Query query = session.createQuery(hql);
+            query.setParameter("courseId", courseId);
+            int updatedRows = query.executeUpdate();
+            return updatedRows > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterDAOImpl implements RegisterDAO {
     @Override
@@ -60,5 +61,29 @@ public class RegisterDAOImpl implements RegisterDAO {
     @Override
     public ArrayList<String> loadIds() throws Exception {
         return null;
+    }
+
+    @Override
+    public boolean saveRegister(List<Register> registers, Session session) throws Exception {
+        try {
+            for (Register register : registers) {
+                session.save(register);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Register searchByCourseId(String courseId, Session session) throws Exception {
+        try {
+            String hql = "SELECT r FROM Register r WHERE r.courseId = :courseId";
+            Query<Register> query = session.createQuery(hql, Register.class);
+            query.setParameter("courseId", courseId);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package lk.ijse.studentmanagementsystem.entity;
 
 import jakarta.persistence.*;
+import lk.ijse.studentmanagementsystem.dto.StudentDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,4 +37,5 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 }
