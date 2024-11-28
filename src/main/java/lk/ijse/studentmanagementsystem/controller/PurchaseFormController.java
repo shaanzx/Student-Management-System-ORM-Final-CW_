@@ -228,6 +228,8 @@ public class PurchaseFormController {
                         addToCartList.remove(selectedIndex);
                         tblAddToCart.refresh();
                         calculateTotalAmount();
+                        calculateCustomerPaymentBalanceAmount();
+
                     }
                 } else {
                     new Alert(Alert.AlertType.WARNING, "No item selected to remove!").show();
@@ -257,8 +259,9 @@ public class PurchaseFormController {
             tblAddToCart.refresh();
             calculateTotalAmount();
             clearInputFields();
+            cmbSelectCourse.requestFocus();
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Error: " + e.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR, "Error: Fill all the required fields").show();
         }
     }
 
@@ -319,11 +322,22 @@ public class PurchaseFormController {
             txtCourseDuration.setText(String.valueOf(courseDTO.getCourseDuration()));
             txtAvailableSeats.setText(String.valueOf(courseDTO.getCourseSeats()));
         } catch (Exception e) {
-            new Alert(Alert.AlertType.WARNING, "Select course first and fill all fields").show();
             throw new RuntimeException(e);
         }
     }
 
+    private void calculateCustomerPaymentBalanceAmount() {
+        String paymentText = txtCustomerPaymentAmount.getText();
+        String totalText = txtTotalAmount.getText();
+
+        if (!paymentText.isEmpty() && !totalText.isEmpty()) {
+            double payment = Double.parseDouble(paymentText);
+            double total = Double.parseDouble(totalText);
+            double balance = payment - total;
+
+            txtCustomerPaymentBalance.setText(String.format("%.2f", balance));
+        }
+    }
     @FXML
     void txtPaymentAmountOnAction(KeyEvent event) {
         try {
@@ -337,14 +351,14 @@ public class PurchaseFormController {
 
                 txtCustomerPaymentBalance.setText(String.format("%.2f", balance));
                 if (balance >= 0) {
-                    txtCustomerPaymentAmount.setStyle("-fx-text-fill: black;");
+                    txtCustomerPaymentAmount.setStyle("-fx-text-fill: black; -fx-font-family: Impact;");
                     btnBuyCourse.setDisable(false);
                 } else {
-                    txtCustomerPaymentAmount.setStyle("-fx-text-fill: red;");
+                    txtCustomerPaymentAmount.setStyle("-fx-font-family: Impact;-fx-text-fill: red;");
                     btnBuyCourse.setDisable(true);
                 }
             } else {txtCustomerPaymentBalance.setText("");
-                txtCustomerPaymentAmount.setStyle("-fx-text-fill: red;");
+                txtCustomerPaymentAmount.setStyle("-fx-font-family: Impact;-fx-text-fill: red;");
                 btnBuyCourse.setDisable(true);
             }
         } catch (NumberFormatException e) {
@@ -354,13 +368,33 @@ public class PurchaseFormController {
         }
     }
 
+    @FXML
+    void txtAdvancePaymentTypedOnAction(KeyEvent event) {
+        try {
+            String advancePaymentText = txtAdvancePayment.getText();
+            String courseFeeText = txtCourseFee.getText();
 
+            if (!advancePaymentText.isEmpty() && !courseFeeText.isEmpty()) {
+                double advancePayment = Double.parseDouble(advancePaymentText);
+                double courseFee = Double.parseDouble(courseFeeText);
+                double balance = courseFee - advancePayment;
+
+                txtCourseFeeBalance.setText(String.format("%.2f", balance));
+            } else {
+                txtCourseFeeBalance.setText("");
+            }
+        } catch (NumberFormatException e) {
+            txtCourseFeeBalance.setText("");
+        }
+    }
+
+@FXML
     public void txtStudentNICOnAction(ActionEvent actionEvent) {
         btnSearch.requestFocus();
     }
 
     private void clearInputFields() {
-        cmbSelectCourse.getSelectionModel().clearSelection();
+        cmbSelectCourse.getSelectionModel().clearAndSelect(-1);
         txtCourseId.clear();
         txtCourseFee.clear();
         txtCourseDuration.clear();

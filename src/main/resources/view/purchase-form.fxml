@@ -75,7 +75,7 @@
             <Label style="-fx-font-family: 'Impact'; -fx-font-size: 18px; -fx-text-fill: #333;" text="Purchase Details" />
             <HBox spacing="10">
                 <TextField fx:id="txtPurchaseId" promptText="Purchase ID" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
-                <TextField fx:id="txtAdvancePayment" promptText="Advance Payment" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtAdvancePayment" onKeyTyped="#txtAdvancePaymentTypedOnAction" promptText="Advance Payment" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
                 <TextField fx:id="txtCourseFeeBalance" promptText="Balance" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
                 <DatePicker fx:id="dpDate" promptText="Date" style="-fx-font-family: 'Impact'; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
             </HBox>
@@ -131,7 +131,7 @@
                 <!-- Buy Course and Purchase Details Buttons in One Row -->
                 <HBox alignment="CENTER_RIGHT" prefHeight="108.0" prefWidth="770.0" spacing="10" style="-fx-padding: 0 0 10 0; -fx-alignment: bottom;">
                     <TextField fx:id="txtTotalAmount" prefHeight="8.0" prefWidth="100.0" promptText="Total Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
-                    <TextField fx:id="txtCustomerPaymentAmount" layoutX="313.0" layoutY="10.0" onAction="#txtPaymentAmountOnAction" prefHeight="1.0" prefWidth="114.0" promptText="Payment Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
+                    <TextField fx:id="txtCustomerPaymentAmount" layoutX="313.0" layoutY="10.0" onKeyTyped="#txtPaymentAmountOnAction" prefHeight="1.0" prefWidth="114.0" promptText="Payment Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
                     <TextField fx:id="txtCustomerPaymentBalance" layoutX="303.0" layoutY="20.0" prefHeight="0.0" prefWidth="114.0" promptText="Balance Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
                     <Button fx:id="btnBuyCourse" onAction="#btnBuyCourseOnAction" prefHeight="41.0" prefWidth="150.0" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #4CAF50; -fx-padding: 10 20;" text="Buy Course" />
                     <Button fx:id="btnShowPurchaseDetails" onAction="#btnShowPurchaseDetailsOnAction" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #FF9800; -fx-padding: 10 20;" text="Show Purchase Details" />
