@@ -17,6 +17,7 @@ import lk.ijse.studentmanagementsystem.dto.StudentDTO;
 import lk.ijse.studentmanagementsystem.entity.Course;
 import lk.ijse.studentmanagementsystem.entity.Register;
 import lk.ijse.studentmanagementsystem.entity.Student;
+import lk.ijse.studentmanagementsystem.entity.User;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
 import lk.ijse.studentmanagementsystem.service.custom.CourseBO;
 import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
@@ -46,6 +47,9 @@ public class PurchaseFormController {
 
     @FXML
     private Button btnAddToCart;
+
+    @FXML
+    private Button btnregister;
 
     @FXML
     private Button btnBuyCourse;
@@ -218,20 +222,20 @@ public class PurchaseFormController {
         try {
             String purchaseId = txtPurchaseId.getText();
             String studentId = txtStudentNIC.getText();
-            String courseId = txtCourseId.getText();
+            String courseId = cmbSelectCourse.getValue();
             double courseFee = Double.parseDouble(txtCourseFee.getText());
             double advanceAmount = Double.parseDouble(txtAdvancePayment.getText());
             double balanceAmount = Double.parseDouble(txtCourseFeeBalance.getText());
 
             // Get the register date from DatePicker and convert to java.sql.Date
             LocalDate localRegisterDate = dpDate.getValue();
-            java.sql.Date registerDate = java.sql.Date.valueOf(localRegisterDate);
+            Date registerDate = Date.valueOf(localRegisterDate);
 
             // Calculate expired date (3 months later)
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(registerDate);
             calendar.add(Calendar.MONTH, 3);
-            java.sql.Date expiredDate = new java.sql.Date(calendar.getTimeInMillis());
+            Date expiredDate = new Date(calendar.getTimeInMillis());
 
             // Create a remove button for the table
             JFXButton btnRemove = new JFXButton("Remove");
@@ -293,138 +297,87 @@ public class PurchaseFormController {
 
     @FXML
     void btnBuyCourseOnAction(ActionEvent event) {
-
-
         try {
-
             if (addToCartList.isEmpty()) {
-                new Alert(Alert.AlertType.WARNING, "Please add at least one course to the cart!").show();
+                new Alert(Alert.AlertType.WARNING, "Cart is empty! Add at least one course.").show();
                 return;
             }
+
+            // Prepare basic details for PaymentDTO
+            String purchaseId = txtPurchaseId.getText();
+            Date purchaseDate = Date.valueOf(dpDate.getValue());
+            double totalAmount = Double.parseDouble(txtTotalAmount.getText());
+            double paymentAmount = Double.parseDouble(txtCustomerPaymentAmount.getText());
+            double balanceAmount = Double.parseDouble(txtCustomerPaymentBalance.getText());
+
+            // Prepare CourseDTO and RegisterDTO lists
             List<RegisterDTO> registerDTOS = new ArrayList<>();
-            String registerId = registerBo.generateNextPurchaseId();
-            StudentDTO studentDTO = studentBo.searchStudentByNic(txtStudentNIC.getText());
-            Student student = new Student(
-                    studentDTO.getId(),
-                    studentDTO.getName(),
-                    studentDTO.getPhoneNo(),
-                    studentDTO.getNic(),
-                    studentDTO.getGmail(),
-                    studentDTO.getGender(),
-                    studentDTO.getAddress(),
-                    studentDTO.getUser()
-            );
-            CourseDTO courseDTO = courseBo.searchCourse(cmbSelectCourse.getValue());
-            Course course = new Course(
-                    courseDTO.getCourseId(),
-                    courseDTO.getCourseName(),
-                    courseDTO.getCourseSeats(),
-                    courseDTO.getCourseDescription(),
-                    courseDTO.getCourseDuration(),
-                    courseDTO.getCourseFee()
-            );
+            List<CourseDTO> courseDTOS = new ArrayList<>();
+            Register firstRegisterDTO = null; // To hold the first RegisterDTO for PaymentDTO linking
 
-            for (int i = 0; i < tblAddToCart.getItems().size(); i++) {
-                AddToCartTM addToCartTM = tblAddToCart.getItems().get(i);
+            for (AddToCartTM addToCart : addToCartList) {
+                // Search for Course
+                CourseDTO courseDTO = courseBo.searchCourse(addToCart.getCourseId());
+                if (courseDTO == null) {
+                    new Alert(Alert.AlertType.WARNING, "Course not found for ID: " + addToCart.getCourseId()).show();
+                    return;
+                }
+                courseDTOS.add(courseDTO);
 
-                RegisterDTO registerDTO = new RegisterDTO(
-                        registerId,
-                        addToCartTM.getRegisterDate(),
-                        addToCartTM.getExpiredDate(),
-                        student,
-                        course
-                );
-                registerDTOS.add(registerDTO);
+                // Generate Register ID
+
+
+                // Search Register
+              /*  RegisterDTO registerDTO = registerBo.searchRegister(addToCart.getCourseId());
+
+                // Use your search method here
+                if (registerDTO == null) {
+                    new Alert(Alert.AlertType.WARNING, "Register not found for ID: " + registerDTO.getRegisterId()).show();
+                    return;
+                }
+
+                // Populate RegisterDTO with updated details
+                Register register = new Register(
+                        registerDTO.getRegisterId(),
+                        registerDTO.getRegisterDate(),
+                        registerDTO.getExpiredDate(),
+                        registerDTO.getStudentId(),
+                        registerDTO.getCourseId()
+                );*/
+
+                // Capture the first RegisterDTO for PaymentDTO
+//                if (register == null) {
+//                    firstRegisterDTO = register;
+//                }
             }
 
-            Register register = new Register();
-            String purchaseId = txtPurchaseId.getText();
-            Date PaymentDate = Date.valueOf(dpDate.getValue());
-            double totalAmount = Double.parseDouble(txtTotalAmount.getText());
-            double customerPayment = Double.parseDouble(txtCustomerPaymentAmount.getText());
-            double customerPaymentBalance = Double.parseDouble(txtCustomerPaymentBalance.getText());
-
+            // Create PaymentDTO and link the first RegisterDTO
             PaymentDTO paymentDTO = new PaymentDTO(
                     purchaseId,
-                    PaymentDate,
+                    purchaseDate,
                     totalAmount,
-                    customerPayment,
-                    customerPaymentBalance,
-                    register
+                    paymentAmount,
+                    balanceAmount,
+                    null
             );
 
-            registerBo.addRegisterCourseDetails(registerDTOS,paymentDTO,courseDTO.getCourseId());
+            // Perform Transaction
+            boolean isTransactionSuccessful = registerBo.addTransaction(paymentDTO, registerDTOS, courseDTOS);
 
-
-
-/*            StudentDTO studentDTO = studentBo.searchStudentByNic(txtStudentNIC.getText());
-            Student student = new Student(
-                    studentDTO.getId(),
-                    studentDTO.getName(),
-                    studentDTO.getPhoneNo(),
-                    studentDTO.getNic(),
-                    studentDTO.getGmail(),
-                    studentDTO.getGender(),
-                    studentDTO.getAddress(),
-                    studentDTO.getUser()
-            );
-
-            CourseDTO courseDTO = courseBo.searchCourse(cmbSelectCourse.getValue());
-            Course course = new Course(
-                    courseDTO.getCourseId(),
-                    courseDTO.getCourseName(),
-                    courseDTO.getCourseSeats(),
-                    courseDTO.getCourseDescription(),
-                    courseDTO.getCourseDuration(),
-                    courseDTO.getCourseFee()
-            );
-            String registerId = registerBo.generateNextStudentCourseId();
-            for (AddToCartTM item : addToCartList) {
-                String purchaseId = item.getPurchaseId();
-                String studentId = item.getStudentId();
-                String courseId = item.getCourseId();
-                double courseFee = item.getCourseFee();
-                double advanceAmount = item.getAdvanceAmount();
-                double balanceAmount = item.getBalanceAmount();
-                java.sql.Date registerDate = item.getRegisterDate();
-                java.sql.Date expiredDate = item.getExpiredDate();
-                double paymentAmount = Double.parseDouble(txtCustomerPaymentAmount.getText());
-
-                RegisterDTO registerDTO = new RegisterDTO(
-                        registerId,
-                        registerDate,
-                        expiredDate,
-                        student,
-                        course
-                );
-
-                PaymentDTO paymentDTO = new PaymentDTO(
-                        purchaseId,
-                        registerDate,
-                        paymentAmount,
-                        advanceAmount,
-                        balanceAmount,
-                        registerId
-                );
-
-
-                boolean isSaveRegisterDone = registerBo.saveRegister(registerDTO);
-                boolean isSavePaymentDone = registerBo.savePayment(paymentDTO);
-                boolean isUpdated = registerBo.updateCourseSeats(courseId);
-            }*/
-
-            new Alert(Alert.AlertType.INFORMATION, "Course purchase successful!").show();
-            addToCartList.clear();
-            tblAddToCart.setItems(addToCartList);
-            tblAddToCart.refresh();
-            btnClearOnAction(null);
-            generateNextPurchaseId();
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
+            if (isTransactionSuccessful) {
+                new Alert(Alert.AlertType.INFORMATION, "Purchase completed successfully!").show();
+                addToCartList.clear();
+                tblAddToCart.refresh();
+                clearInputFields();// Utility method to clear inputs
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Purchase failed! Please try again.").show();
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            new Alert(Alert.AlertType.ERROR, "An error occurred: " + e.getMessage()).show();
+            e.printStackTrace();
         }
     }
+
 
 
     @FXML
@@ -479,6 +432,78 @@ public class PurchaseFormController {
             throw new RuntimeException(e);
         }
     }
+
+
+    @FXML
+    void btnRegisterOnAction(ActionEvent event) {
+        List<RegisterDTO> registerDTOS = new ArrayList<>();
+        User user = new User();
+        try {
+            // Validate NIC input
+            if (txtStudentNIC.getText().isEmpty()) {
+                new Alert(Alert.AlertType.WARNING, "Please enter a valid Student NIC!").show();
+                return;
+            }
+
+            // Fetch the student using NIC
+            StudentDTO studentDTO = studentBo.searchStudentByNic(txtStudentNIC.getText());
+            if (studentDTO == null) {
+                new Alert(Alert.AlertType.WARNING, "Student not found for the given NIC!").show();
+                return;
+            }
+
+            Student student = new Student(
+                    studentDTO.getId(),
+                    studentDTO.getName(),
+                    studentDTO.getPhoneNo(),
+                    studentDTO.getNic(),
+                    studentDTO.getGmail(),
+                    studentDTO.getGender(),
+                    studentDTO.getAddress(),
+                    user
+
+            );
+            // Iterate through AddToCart list and prepare RegisterDTO list
+            for (AddToCartTM addToCart : addToCartList) {
+                // Generate unique register ID for each cart item
+                String registerId = registerBo.generateNextRegisterId();
+
+                CourseDTO courseDTO = courseBo.searchCourse(addToCart.getCourseId());
+                if (courseDTO == null) {
+                    new Alert(Alert.AlertType.WARNING, "Course not found for ID: " + addToCart.getCourseId()).show();
+                    return;
+                }
+                Course  course = new Course(
+                        courseDTO.getCourseId(),
+                        courseDTO.getCourseName(),
+                        courseDTO.getCourseSeats(),
+                        courseDTO.getCourseDescription(),
+                        courseDTO.getCourseDuration(),
+                        courseDTO.getCourseFee()
+                        );
+
+                RegisterDTO registerDTO = new RegisterDTO(
+                        registerId,
+                        addToCart.getRegisterDate(),
+                        addToCart.getExpiredDate(),
+                        student,
+                        course
+                );
+                registerDTOS.add(registerDTO);
+            }
+
+            // Pass the RegisterDTO list to the next step (e.g., save in database)
+            boolean isRegistered = registerBo.addRegisterDetails(registerDTOS);
+            if (isRegistered) {
+                new Alert(Alert.AlertType.INFORMATION, "Registration Successful!").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to register courses!").show();
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "An error occurred: " + e.getMessage()).show();
+        }
+    }
+
 
     private void calculateCustomerPaymentBalanceAmount() {
         String paymentText = txtCustomerPaymentAmount.getText();
@@ -550,7 +575,7 @@ public class PurchaseFormController {
     }
 
     private void clearInputFields() {
-        cmbSelectCourse.getSelectionModel().clearAndSelect(-1);
+        cmbSelectCourse.setValue(null);
         txtCourseId.clear();
         txtCourseFee.clear();
         txtCourseDuration.clear();

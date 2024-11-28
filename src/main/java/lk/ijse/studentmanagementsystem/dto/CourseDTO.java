@@ -14,5 +14,4 @@ public class CourseDTO {
       private String courseDescription;
       private String courseDuration;
       private double courseFee;
-
 }

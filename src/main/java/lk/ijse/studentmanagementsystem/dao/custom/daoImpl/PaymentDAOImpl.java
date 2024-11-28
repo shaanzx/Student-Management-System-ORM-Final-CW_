@@ -51,4 +51,15 @@ public class PaymentDAOImpl implements PaymentDAO {
     public ArrayList<String> loadIds() throws Exception {
         return null;
     }
+
+    @Override
+    public boolean savePayment(Payment payment, Session session) throws Exception {
+        try {
+            session.save(payment);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

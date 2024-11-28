@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +14,6 @@ import java.util.Date;
 @Table(name = "register")
 public class Register {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "register_id")
     private String registerId;
 
@@ -30,5 +29,5 @@ public class Register {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    private Course course;
+    private Course courseId;
 }
