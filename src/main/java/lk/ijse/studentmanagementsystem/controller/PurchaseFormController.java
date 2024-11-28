@@ -1,12 +1,15 @@
 package lk.ijse.studentmanagementsystem.controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import lk.ijse.studentmanagementsystem.dto.CourseDTO;
@@ -21,6 +24,7 @@ import lk.ijse.studentmanagementsystem.util.Navigation;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class PurchaseFormController {
 
@@ -79,9 +83,6 @@ public class PurchaseFormController {
     private TableColumn<?, ?> colStudentId;
 
     @FXML
-    private Label lblShowEnoughMoney;
-
-    @FXML
     private TableView<AddToCartTM> tblAddToCart;
 
     @FXML
@@ -135,6 +136,9 @@ public class PurchaseFormController {
     PaymentBo paymentBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.PAYMENT);
     CourseBO courseBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.COURSE);
     StudentBO studentBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.STUDENT);
+
+
+    private ObservableList<AddToCartTM> addToCartList = FXCollections.observableArrayList();
 
     public void initialize() {
         ClockUtil.initializeClock(timeLabel, "HH:mm:ss");
@@ -200,8 +204,65 @@ public class PurchaseFormController {
 
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
+        try {
+            String purchaseId = txtPurchaseId.getText();
+            String studentId = txtStudentNIC.getText();
+            String courseId = txtCourseId.getText();
+            double courseFee = Double.parseDouble(txtCourseFee.getText());
+            double advanceAmount = Double.parseDouble(txtAdvancePayment.getText());
+            double balanceAmount = Double.parseDouble(txtCourseFeeBalance.getText());
+            String registerDate = dpDate.getValue().toString();
 
+            JFXButton btnRemove = new JFXButton("Remove");
+            btnRemove.setCursor(Cursor.HAND);
+            btnRemove.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 14px;");
+
+            btnRemove.setOnAction(e -> {
+                int selectedIndex = tblAddToCart.getSelectionModel().getSelectedIndex();
+                if (selectedIndex >= 0) {
+                    ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+                    ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    Optional<ButtonType> result = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure to remove this item?", yes, no).showAndWait();
+
+                    if (result.orElse(no) == yes) {
+                        addToCartList.remove(selectedIndex);
+                        tblAddToCart.refresh();
+                        calculateTotalAmount();
+                    }
+                } else {
+                    new Alert(Alert.AlertType.WARNING, "No item selected to remove!").show();
+                }
+            });
+
+            for (AddToCartTM item : addToCartList) {
+                if (item.getCourseId().equals(courseId)) {
+                    new Alert(Alert.AlertType.WARNING, "This course is already added to the cart!").show();
+                    return;
+                }
+            }
+
+            AddToCartTM addToCartTM = new AddToCartTM(
+                    purchaseId,
+                    studentId,
+                    courseId,
+                    courseFee,
+                    advanceAmount,
+                    balanceAmount,
+                    registerDate,
+                    btnRemove
+            );
+
+            addToCartList.add(addToCartTM);
+            tblAddToCart.setItems(addToCartList);
+            tblAddToCart.refresh();
+            calculateTotalAmount();
+            clearInputFields();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error: " + e.getMessage()).show();
+        }
     }
+
+
 
     @FXML
     void btnBuyCourseOnAction(ActionEvent event) {
@@ -264,11 +325,55 @@ public class PurchaseFormController {
     }
 
     @FXML
-    void lblShowEnoughMoneyOnAction(MouseEvent event) {
+    void txtPaymentAmountOnAction(KeyEvent event) {
+        try {
+            String paymentText = txtCustomerPaymentAmount.getText();
+            String totalText = txtTotalAmount.getText();
 
+            if (!paymentText.isEmpty() && !totalText.isEmpty()) {
+                double payment = Double.parseDouble(paymentText);
+                double total = Double.parseDouble(totalText);
+                double balance = payment - total;
+
+                txtCustomerPaymentBalance.setText(String.format("%.2f", balance));
+                if (balance >= 0) {
+                    txtCustomerPaymentAmount.setStyle("-fx-text-fill: black;");
+                    btnBuyCourse.setDisable(false);
+                } else {
+                    txtCustomerPaymentAmount.setStyle("-fx-text-fill: red;");
+                    btnBuyCourse.setDisable(true);
+                }
+            } else {txtCustomerPaymentBalance.setText("");
+                txtCustomerPaymentAmount.setStyle("-fx-text-fill: red;");
+                btnBuyCourse.setDisable(true);
+            }
+        } catch (NumberFormatException e) {
+            txtCustomerPaymentBalance.setText("");
+            txtCustomerPaymentAmount.setStyle("-fx-text-fill: red;");
+            btnBuyCourse.setDisable(true);
+        }
     }
+
 
     public void txtStudentNICOnAction(ActionEvent actionEvent) {
         btnSearch.requestFocus();
+    }
+
+    private void clearInputFields() {
+        cmbSelectCourse.getSelectionModel().clearSelection();
+        txtCourseId.clear();
+        txtCourseFee.clear();
+        txtCourseDuration.clear();
+        txtAvailableSeats.clear();
+        txtAdvancePayment.clear();
+        txtCourseFeeBalance.clear();
+        txtPurchaseId.requestFocus();
+    }
+    private void calculateTotalAmount() {
+        double total = 0.0;
+        for (AddToCartTM course : addToCartList) {
+            total += course.getAdvanceAmount();
+        }
+        txtTotalAmount.setText(String.format("%.2f", total));
     }
 }

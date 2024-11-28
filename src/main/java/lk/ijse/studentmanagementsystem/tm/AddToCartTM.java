@@ -12,7 +12,7 @@ public class AddToCartTM {
     private String purchaseId;
     private String studentId;
     private String courseId;
-    private String courseFee;
+    private double courseFee;
     private double advanceAmount;
     private double balanceAmount;
     private String registerDate;

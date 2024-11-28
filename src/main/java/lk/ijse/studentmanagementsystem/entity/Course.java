@@ -31,5 +31,5 @@ public class Course {
     private String courseDuration;
 
     @Column(name = "course_fee")
-    private String courseFee;
+    private double courseFee;
 }

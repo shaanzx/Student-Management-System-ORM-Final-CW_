@@ -153,7 +153,7 @@ public class CoursesFormController {
         txtTotalSeats.clear();
         txtCourseDescription.clear();
         txtCourseDuration.setText("Month");
-        txtCourseFee.setText("Rs.");
+        txtCourseFee.clear();
         btnSave.setDisable(false);
         txtCourseId.setDisable(false);
     }
@@ -197,16 +197,17 @@ public class CoursesFormController {
 
     @FXML
     void btnSaveCourseOnAction(ActionEvent event) {
-        int totalSeats = Integer.parseInt(txtTotalSeats.getText().trim());
+        Integer.parseInt(txtTotalSeats.getText().trim());
+
 
 
         CourseDTO courseDTO = new CourseDTO(
                 txtCourseId.getText(),
                 txtCourseName.getText(),
-                totalSeats,
+                Integer.parseInt(txtTotalSeats.getText().trim()),
                 txtCourseDescription.getText(),
                 txtCourseDuration.getText(),
-                txtCourseFee.getText()
+                Double.parseDouble(txtCourseFee.getText())
         );
 
         try {
@@ -240,7 +241,7 @@ public class CoursesFormController {
                 txtTotalSeats.setText(String.valueOf(course.getCourseSeats()));
                 txtCourseDescription.setText(course.getCourseDescription());
                 txtCourseDuration.setText(course.getCourseDuration());
-                txtCourseFee.setText(course.getCourseFee());
+                txtCourseFee.setText(String.valueOf(course.getCourseFee()));
             } else {
                 new Alert(Alert.AlertType.WARNING, "No course found with ID: " + courseId).show();
             }
@@ -257,7 +258,7 @@ public class CoursesFormController {
                 Integer.parseInt(txtTotalSeats.getText()),
                 txtCourseDescription.getText(),
                 txtCourseDuration.getText(),
-                txtCourseFee.getText()
+                Double.parseDouble(txtCourseFee.getText())
         );
 
         try {

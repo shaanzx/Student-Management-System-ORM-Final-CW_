@@ -13,6 +13,6 @@ public class CourseDTO {
       private int courseSeats;
       private String courseDescription;
       private String courseDuration;
-      private String courseFee;
+      private double courseFee;
 
 }

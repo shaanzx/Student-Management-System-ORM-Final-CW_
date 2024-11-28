@@ -106,24 +106,35 @@
         </ScrollPane>
         <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #f0f0f0; -fx-border-radius: 5; -fx-padding: 10 15;">
             <children>
-
-                <!-- Buy Course and Purchase Details Buttons in One Row -->
-                <HBox alignment="CENTER_RIGHT" prefHeight="108.0" prefWidth="770.0" spacing="10" style="-fx-padding: 0 0 10 0; -fx-alignment: bottom;">
-                    <TextField fx:id="txtTotalAmount" prefHeight="8.0" prefWidth="100.0" promptText="Total Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
-                    <TextField fx:id="txtCustomerPaymentAmount" layoutX="313.0" layoutY="10.0" prefHeight="1.0" prefWidth="114.0" promptText="Payment Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
-                    <TextField fx:id="txtCustomerPaymentBalance" layoutX="303.0" layoutY="20.0" prefHeight="0.0" prefWidth="114.0" promptText="Balance Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
-                    <Button fx:id="btnBuyCourse" onAction="#btnBuyCourseOnAction" prefHeight="41.0" prefWidth="150.0" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #4CAF50; -fx-padding: 10 20;" text="Buy Course" />
-                    <Button fx:id="btnShowPurchaseDetails" onAction="#btnShowPurchaseDetailsOnAction" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #FF9800; -fx-padding: 10 20;" text="Show Purchase Details" />
-                </HBox>
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <Region prefHeight="16.0" prefWidth="152.0" />
-                        <Label fx:id="lblShowEnoughMoney" onDragDetected="#lblShowEnoughMoneyOnAction" prefHeight="16.0" prefWidth="342.0" text="Need Money" textFill="#ff0202">
+                        <Region prefHeight="17.0" prefWidth="38.0" />
+                        <Label prefHeight="17.0" prefWidth="114.0" text="Total Amount" textFill="#0c4d17">
                             <font>
                                 <Font name="Impact" size="14.0" />
                             </font>
                         </Label>
+                  <Label layoutX="162.0" layoutY="10.0" prefHeight="17.0" prefWidth="106.0" text="Payment Amount" textFill="#0c4d17">
+                     <font>
+                        <Font name="Impact" size="14.0" />
+                     </font>
+                  </Label>
+                  <Region layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="19.0" />
+                  <Label layoutX="162.0" layoutY="10.0" prefHeight="17.0" prefWidth="106.0" text="Balance Amount" textFill="#0c4d17">
+                     <font>
+                        <Font name="Impact" size="14.0" />
+                     </font>
+                  </Label>
                     </children>
+                </HBox>
+
+                <!-- Buy Course and Purchase Details Buttons in One Row -->
+                <HBox alignment="CENTER_RIGHT" prefHeight="108.0" prefWidth="770.0" spacing="10" style="-fx-padding: 0 0 10 0; -fx-alignment: bottom;">
+                    <TextField fx:id="txtTotalAmount" prefHeight="8.0" prefWidth="100.0" promptText="Total Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
+                    <TextField fx:id="txtCustomerPaymentAmount" layoutX="313.0" layoutY="10.0" onAction="#txtPaymentAmountOnAction" prefHeight="1.0" prefWidth="114.0" promptText="Payment Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
+                    <TextField fx:id="txtCustomerPaymentBalance" layoutX="303.0" layoutY="20.0" prefHeight="0.0" prefWidth="114.0" promptText="Balance Amount" style="-fx-font-family: 'Impact'; -fx-font-size: 14px; -fx-alignment: center;" />
+                    <Button fx:id="btnBuyCourse" onAction="#btnBuyCourseOnAction" prefHeight="41.0" prefWidth="150.0" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #4CAF50; -fx-padding: 10 20;" text="Buy Course" />
+                    <Button fx:id="btnShowPurchaseDetails" onAction="#btnShowPurchaseDetailsOnAction" style="-fx-font-family: 'Impact'; -fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: #FF9800; -fx-padding: 10 20;" text="Show Purchase Details" />
                 </HBox>
             </children>
         </VBox>

@@ -76,7 +76,7 @@
                     <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                 </effect>
             </TextField>
-            <TextField fx:id="txtCourseFee" promptText="Course Fee" style="-fx-font-family: sans-serif; -fx-font-size: 14px;" text="Rs." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <TextField fx:id="txtCourseFee" promptText="Course Fee" style="-fx-font-family: sans-serif; -fx-font-size: 14px;" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
                 <effect>
                     <InnerShadow choke="0.1" color="#0000001a" height="10" radius="4.5" width="10" />
                 </effect>

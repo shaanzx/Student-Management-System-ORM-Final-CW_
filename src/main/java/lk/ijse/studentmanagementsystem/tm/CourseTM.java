@@ -13,5 +13,5 @@ public class CourseTM {
     private int seats;
     private String description;
     private String duration;
-    private String fee;
+    private double fee;
 }

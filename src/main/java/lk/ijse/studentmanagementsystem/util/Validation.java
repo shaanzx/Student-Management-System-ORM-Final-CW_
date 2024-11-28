@@ -18,7 +18,7 @@ public class Validation {
     public static final String COURSE_SEATS_PATTERN = "^\\d{1,3}$";
     public static final String DESCRIPTION_PATTERN = "^[A-Za-z0-9 ]{3,200}$";
     public static final String DURATION_PATTERN = "^\\d{2} Months$";
-    public static final String COURSE_FEE_PATTERN = "^Rs\\.\\d{1,8}$";
+    public static final String COURSE_FEE_PATTERN = "^\\d{1,8}$";
 
 
 
