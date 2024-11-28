@@ -140,8 +140,8 @@ public class RegisterBOImpl implements RegisterBO {
         }
 
         String[] parts = lastId.split("-");
-        String lastYear = parts[2];
-        int lastSequence = Integer.parseInt(parts[3]);
+        String lastYear = parts[1];
+        int lastSequence = Integer.parseInt(parts[2]);
 
         if (!lastYear.equals(currentYear)) {
             return String.format("PSCD-%s-0001", currentYear);
