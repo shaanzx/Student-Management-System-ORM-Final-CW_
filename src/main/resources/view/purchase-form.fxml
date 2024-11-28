@@ -96,11 +96,12 @@
                     <TableColumn fx:id="colPurchaseID" prefWidth="95.99999237060547" text="Purchase ID" />
                     <TableColumn fx:id="colStudentId" prefWidth="95.99999237060547" text="Student ID" />
                     <TableColumn fx:id="colCourseId" prefWidth="135.0" text="Course ID" />
-                    <TableColumn fx:id="colCourseFee" prefWidth="90.0" text="Course Fee" />
-                    <TableColumn fx:id="colAdvance" prefWidth="86.6666259765625" text="Advance" />
-                    <TableColumn fx:id="colBalance" prefWidth="90.66668701171875" text="Balance" />
-                    <TableColumn fx:id="colPaymentDate" minWidth="0.0" prefWidth="121.33331298828125" text="Payment Date" />
-               <TableColumn fx:id="colRemove" prefWidth="51.0" text="Remove" />
+                    <TableColumn fx:id="colCourseFee" prefWidth="71.33334350585938" text="Course Fee" />
+                    <TableColumn fx:id="colAdvance" prefWidth="64.66668701171875" text="Advance" />
+                    <TableColumn fx:id="colBalance" prefWidth="66.33331298828125" text="Balance" />
+                    <TableColumn fx:id="colPaymentDate" minWidth="0.0" prefWidth="94.33331298828125" text="Payment Date" />
+               <TableColumn fx:id="colExpiredDate" minWidth="0.0" prefWidth="86.33331298828125" text="Expired Date" />
+               <TableColumn fx:id="colRemove" prefWidth="54.0" text="Remove" />
                 </columns>
             </TableView>
         </ScrollPane>

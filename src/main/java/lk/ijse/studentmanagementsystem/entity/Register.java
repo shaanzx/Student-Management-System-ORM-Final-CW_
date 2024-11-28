@@ -11,15 +11,18 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "student_course")
-public class Student_Course {
+@Table(name = "register")
+public class Register {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_course_id")
-    private int studentCourseId;
+    @Column(name = "register_id")
+    private String registerId;
 
     @Column(name = "register_date")
     private Date registerDate;
+
+    @Column(name = "expired_date")
+    private Date expiredDate;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

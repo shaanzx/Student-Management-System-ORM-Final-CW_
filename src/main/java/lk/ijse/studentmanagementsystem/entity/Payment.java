@@ -30,6 +30,6 @@ public class Payment {
     private double balanceAmount;
 
     @ManyToOne
-    @JoinColumn(name = "student_course_id")
-    private Student_Course studentCourse;
+    @JoinColumn(name = "register_id")
+    private Register registerId;
 }

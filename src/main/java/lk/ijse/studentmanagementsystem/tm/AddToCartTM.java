@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -15,6 +17,7 @@ public class AddToCartTM {
     private double courseFee;
     private double advanceAmount;
     private double balanceAmount;
-    private String registerDate;
+    private Date registerDate;
+    private Date expiredDate;
     private JFXButton Remove;
 }

@@ -16,7 +16,7 @@ public class SessionFactoryConfig {
                 addAnnotatedClass(Student.class).
                 addAnnotatedClass(User.class).
                 addAnnotatedClass(Course.class).
-                addAnnotatedClass(Student_Course.class).
+                addAnnotatedClass(Register.class).
                 addAnnotatedClass(Payment.class).
                 buildSessionFactory();
     }

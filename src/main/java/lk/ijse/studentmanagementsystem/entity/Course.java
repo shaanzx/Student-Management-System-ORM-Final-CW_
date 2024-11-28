@@ -32,4 +32,5 @@ public class Course {
 
     @Column(name = "course_fee")
     private double courseFee;
+
 }

@@ -104,4 +104,19 @@ public class CourseDAOImpl implements CourseDAO {
             return false;
         }
     }
+
+    @Override
+    public boolean updateSeats(String courseId) throws Exception {
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            Course course = search(courseId);
+            course.setCourseSeats(course.getCourseSeats() - 1);
+            session.update(course);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

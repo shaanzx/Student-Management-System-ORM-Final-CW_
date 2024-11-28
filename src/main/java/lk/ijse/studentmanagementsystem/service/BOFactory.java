@@ -1,6 +1,5 @@
 package lk.ijse.studentmanagementsystem.service;
 
-import lk.ijse.studentmanagementsystem.service.custom.PaymentBo;
 import lk.ijse.studentmanagementsystem.service.custom.boImpl.*;
 
 public class BOFactory {
@@ -17,7 +16,7 @@ public class BOFactory {
     }
 
     public enum BOType {
-        STUDENT, COURSE, USER, STUDENT_COURSE, PAYMENT
+        STUDENT, COURSE, USER, REGISTER, PAYMENT
     }
 
     public <T> T getBO(BOType boType) {
@@ -28,10 +27,8 @@ public class BOFactory {
                 return (T) new CourseBOImpl();
             case USER:
                 return (T) new UserBOImpl();
-            case STUDENT_COURSE:
-                return (T) new Student_CourseBOImpl();
-            case PAYMENT:
-                return (T) new PaymentBOImpl();
+            case REGISTER:
+                return (T) new RegisterBOImpl();
             default:
                 return null;
         }

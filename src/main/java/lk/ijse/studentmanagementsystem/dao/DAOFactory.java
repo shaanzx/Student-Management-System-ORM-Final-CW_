@@ -13,7 +13,7 @@ public class DAOFactory {
     }
 
     public enum DAOType {
-        USER, STUDENT, COURSE, STUDENT_COURSE, PAYMENT
+    USER, STUDENT, COURSE, REGISTER, PAYMENT
     }
 
     public <T extends SuperDAO> T getDAO(DAOType daoType) {
@@ -24,8 +24,8 @@ public class DAOFactory {
                 return (T) new StudentDAOImpl();
             case COURSE:
                 return (T) new CourseDAOImpl();
-            case STUDENT_COURSE:
-                return (T) new Student_CourseDAOImpl();
+            case REGISTER:
+                return (T) new RegisterDAOImpl();
             case PAYMENT:
                 return (T) new PaymentDAOImpl();
             default:

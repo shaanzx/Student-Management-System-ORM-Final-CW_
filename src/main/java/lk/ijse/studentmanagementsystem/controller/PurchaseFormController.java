@@ -1,7 +1,6 @@
 package lk.ijse.studentmanagementsystem.controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,20 +9,28 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import lk.ijse.studentmanagementsystem.dto.CourseDTO;
+import lk.ijse.studentmanagementsystem.dto.PaymentDTO;
+import lk.ijse.studentmanagementsystem.dto.RegisterDTO;
 import lk.ijse.studentmanagementsystem.dto.StudentDTO;
+import lk.ijse.studentmanagementsystem.entity.Course;
+import lk.ijse.studentmanagementsystem.entity.Register;
+import lk.ijse.studentmanagementsystem.entity.Student;
 import lk.ijse.studentmanagementsystem.service.BOFactory;
 import lk.ijse.studentmanagementsystem.service.custom.CourseBO;
-import lk.ijse.studentmanagementsystem.service.custom.PaymentBo;
 import lk.ijse.studentmanagementsystem.service.custom.StudentBO;
+import lk.ijse.studentmanagementsystem.service.custom.RegisterBO;
 import lk.ijse.studentmanagementsystem.tm.AddToCartTM;
 import lk.ijse.studentmanagementsystem.util.ClockUtil;
 import lk.ijse.studentmanagementsystem.util.Navigation;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 public class PurchaseFormController {
@@ -69,6 +76,9 @@ public class PurchaseFormController {
 
     @FXML
     private TableColumn<?, ?> colCourseId;
+
+    @FXML
+    private TableColumn<?, ?> colExpiredDate;
 
     @FXML
     private TableColumn<?, ?> colPaymentDate;
@@ -133,9 +143,9 @@ public class PurchaseFormController {
     @FXML
     private TextField txtTotalAmount;
 
-    PaymentBo paymentBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.PAYMENT);
     CourseBO courseBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.COURSE);
     StudentBO studentBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.STUDENT);
+    RegisterBO registerBo = BOFactory.getBoFactory().getBO(BOFactory.BOType.REGISTER);
 
 
     private ObservableList<AddToCartTM> addToCartList = FXCollections.observableArrayList();
@@ -155,6 +165,7 @@ public class PurchaseFormController {
         colAdvance.setCellValueFactory(new PropertyValueFactory<>("advanceAmount"));
         colBalance.setCellValueFactory(new PropertyValueFactory<>("balanceAmount"));
         colPaymentDate.setCellValueFactory(new PropertyValueFactory<>("registerDate"));
+        colExpiredDate.setCellValueFactory(new PropertyValueFactory<>("expiredDate"));
         colRemove.setCellValueFactory(new PropertyValueFactory<>("remove"));
     }
 
@@ -176,7 +187,7 @@ public class PurchaseFormController {
 
     private void generateNextPurchaseId() {
         try {
-            txtPurchaseId.setText(paymentBo.generateNextPurchaseId());
+            txtPurchaseId.setText(registerBo.generateNextPurchaseId());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -211,8 +222,18 @@ public class PurchaseFormController {
             double courseFee = Double.parseDouble(txtCourseFee.getText());
             double advanceAmount = Double.parseDouble(txtAdvancePayment.getText());
             double balanceAmount = Double.parseDouble(txtCourseFeeBalance.getText());
-            String registerDate = dpDate.getValue().toString();
 
+            // Get the register date from DatePicker and convert to java.sql.Date
+            LocalDate localRegisterDate = dpDate.getValue();
+            java.sql.Date registerDate = java.sql.Date.valueOf(localRegisterDate);
+
+            // Calculate expired date (3 months later)
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(registerDate);
+            calendar.add(Calendar.MONTH, 3);
+            java.sql.Date expiredDate = new java.sql.Date(calendar.getTimeInMillis());
+
+            // Create a remove button for the table
             JFXButton btnRemove = new JFXButton("Remove");
             btnRemove.setCursor(Cursor.HAND);
             btnRemove.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 14px;");
@@ -229,13 +250,13 @@ public class PurchaseFormController {
                         tblAddToCart.refresh();
                         calculateTotalAmount();
                         calculateCustomerPaymentBalanceAmount();
-
                     }
                 } else {
                     new Alert(Alert.AlertType.WARNING, "No item selected to remove!").show();
                 }
             });
 
+            // Check if the course is already added
             for (AddToCartTM item : addToCartList) {
                 if (item.getCourseId().equals(courseId)) {
                     new Alert(Alert.AlertType.WARNING, "This course is already added to the cart!").show();
@@ -243,6 +264,7 @@ public class PurchaseFormController {
                 }
             }
 
+            // Add the item to the cart
             AddToCartTM addToCartTM = new AddToCartTM(
                     purchaseId,
                     studentId,
@@ -251,7 +273,9 @@ public class PurchaseFormController {
                     advanceAmount,
                     balanceAmount,
                     registerDate,
+                    expiredDate,
                     btnRemove
+                    // Set the calculated expiredDate
             );
 
             addToCartList.add(addToCartTM);
@@ -260,22 +284,152 @@ public class PurchaseFormController {
             calculateTotalAmount();
             clearInputFields();
             cmbSelectCourse.requestFocus();
+
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Error: Fill all the required fields").show();
         }
     }
 
 
-
     @FXML
     void btnBuyCourseOnAction(ActionEvent event) {
 
+
+        try {
+
+            if (addToCartList.isEmpty()) {
+                new Alert(Alert.AlertType.WARNING, "Please add at least one course to the cart!").show();
+                return;
+            }
+            List<RegisterDTO> registerDTOS = new ArrayList<>();
+            String registerId = registerBo.generateNextPurchaseId();
+            StudentDTO studentDTO = studentBo.searchStudentByNic(txtStudentNIC.getText());
+            Student student = new Student(
+                    studentDTO.getId(),
+                    studentDTO.getName(),
+                    studentDTO.getPhoneNo(),
+                    studentDTO.getNic(),
+                    studentDTO.getGmail(),
+                    studentDTO.getGender(),
+                    studentDTO.getAddress(),
+                    studentDTO.getUser()
+            );
+            CourseDTO courseDTO = courseBo.searchCourse(cmbSelectCourse.getValue());
+            Course course = new Course(
+                    courseDTO.getCourseId(),
+                    courseDTO.getCourseName(),
+                    courseDTO.getCourseSeats(),
+                    courseDTO.getCourseDescription(),
+                    courseDTO.getCourseDuration(),
+                    courseDTO.getCourseFee()
+            );
+
+            for (int i = 0; i < tblAddToCart.getItems().size(); i++) {
+                AddToCartTM addToCartTM = tblAddToCart.getItems().get(i);
+
+                RegisterDTO registerDTO = new RegisterDTO(
+                        registerId,
+                        addToCartTM.getRegisterDate(),
+                        addToCartTM.getExpiredDate(),
+                        student,
+                        course
+                );
+                registerDTOS.add(registerDTO);
+            }
+
+            Register register = new Register();
+            String purchaseId = txtPurchaseId.getText();
+            Date PaymentDate = Date.valueOf(dpDate.getValue());
+            double totalAmount = Double.parseDouble(txtTotalAmount.getText());
+            double customerPayment = Double.parseDouble(txtCustomerPaymentAmount.getText());
+            double customerPaymentBalance = Double.parseDouble(txtCustomerPaymentBalance.getText());
+
+            PaymentDTO paymentDTO = new PaymentDTO(
+                    purchaseId,
+                    PaymentDate,
+                    totalAmount,
+                    customerPayment,
+                    customerPaymentBalance,
+                    register
+            );
+
+            registerBo.addRegisterCourseDetails(registerDTOS,paymentDTO,courseDTO.getCourseId());
+
+
+
+/*            StudentDTO studentDTO = studentBo.searchStudentByNic(txtStudentNIC.getText());
+            Student student = new Student(
+                    studentDTO.getId(),
+                    studentDTO.getName(),
+                    studentDTO.getPhoneNo(),
+                    studentDTO.getNic(),
+                    studentDTO.getGmail(),
+                    studentDTO.getGender(),
+                    studentDTO.getAddress(),
+                    studentDTO.getUser()
+            );
+
+            CourseDTO courseDTO = courseBo.searchCourse(cmbSelectCourse.getValue());
+            Course course = new Course(
+                    courseDTO.getCourseId(),
+                    courseDTO.getCourseName(),
+                    courseDTO.getCourseSeats(),
+                    courseDTO.getCourseDescription(),
+                    courseDTO.getCourseDuration(),
+                    courseDTO.getCourseFee()
+            );
+            String registerId = registerBo.generateNextStudentCourseId();
+            for (AddToCartTM item : addToCartList) {
+                String purchaseId = item.getPurchaseId();
+                String studentId = item.getStudentId();
+                String courseId = item.getCourseId();
+                double courseFee = item.getCourseFee();
+                double advanceAmount = item.getAdvanceAmount();
+                double balanceAmount = item.getBalanceAmount();
+                java.sql.Date registerDate = item.getRegisterDate();
+                java.sql.Date expiredDate = item.getExpiredDate();
+                double paymentAmount = Double.parseDouble(txtCustomerPaymentAmount.getText());
+
+                RegisterDTO registerDTO = new RegisterDTO(
+                        registerId,
+                        registerDate,
+                        expiredDate,
+                        student,
+                        course
+                );
+
+                PaymentDTO paymentDTO = new PaymentDTO(
+                        purchaseId,
+                        registerDate,
+                        paymentAmount,
+                        advanceAmount,
+                        balanceAmount,
+                        registerId
+                );
+
+
+                boolean isSaveRegisterDone = registerBo.saveRegister(registerDTO);
+                boolean isSavePaymentDone = registerBo.savePayment(paymentDTO);
+                boolean isUpdated = registerBo.updateCourseSeats(courseId);
+            }*/
+
+            new Alert(Alert.AlertType.INFORMATION, "Course purchase successful!").show();
+            addToCartList.clear();
+            tblAddToCart.setItems(addToCartList);
+            tblAddToCart.refresh();
+            btnClearOnAction(null);
+            generateNextPurchaseId();
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
     @FXML
     void btnClearOnAction(ActionEvent event) {
-        cmbSelectCourse.getSelectionModel().clearSelection();
+        cmbSelectCourse.setPromptText("Select a course");
         txtCourseId.clear();
         txtCourseFee.clear();
         txtCourseDuration.clear();
@@ -338,6 +492,7 @@ public class PurchaseFormController {
             txtCustomerPaymentBalance.setText(String.format("%.2f", balance));
         }
     }
+
     @FXML
     void txtPaymentAmountOnAction(KeyEvent event) {
         try {
@@ -357,7 +512,8 @@ public class PurchaseFormController {
                     txtCustomerPaymentAmount.setStyle("-fx-font-family: Impact;-fx-text-fill: red;");
                     btnBuyCourse.setDisable(true);
                 }
-            } else {txtCustomerPaymentBalance.setText("");
+            } else {
+                txtCustomerPaymentBalance.setText("");
                 txtCustomerPaymentAmount.setStyle("-fx-font-family: Impact;-fx-text-fill: red;");
                 btnBuyCourse.setDisable(true);
             }
@@ -388,7 +544,7 @@ public class PurchaseFormController {
         }
     }
 
-@FXML
+    @FXML
     public void txtStudentNICOnAction(ActionEvent actionEvent) {
         btnSearch.requestFocus();
     }
@@ -403,6 +559,7 @@ public class PurchaseFormController {
         txtCourseFeeBalance.clear();
         txtPurchaseId.requestFocus();
     }
+
     private void calculateTotalAmount() {
         double total = 0.0;
         for (AddToCartTM course : addToCartList) {
