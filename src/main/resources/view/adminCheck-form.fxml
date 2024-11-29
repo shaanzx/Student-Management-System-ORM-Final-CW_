@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="ancLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.studentmanagementsystem.controller.AdminCheckFormController">
+   <children>
+      <Label layoutX="29.0" layoutY="47.0" text="Admin Credeintial Check">
+         <font>
+            <Font name="Impact" size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtAdminId" layoutX="29.0" layoutY="136.0" prefHeight="25.0" prefWidth="243.0" promptText="Input Admin ID" />
+      <Label layoutX="29.0" layoutY="100.0" prefHeight="29.0" prefWidth="51.0" text="User Id">
+         <font>
+            <Font name="Impact" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="180.0" prefHeight="29.0" prefWidth="60.0" text="Password">
+         <font>
+            <Font name="Impact" size="14.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtPassword" layoutX="29.0" layoutY="217.0" prefHeight="25.0" prefWidth="243.0" promptText="Input Password" />
+      <JFXButton fx:id="btnCheckAdmin" buttonType="RAISED" layoutX="87.0" layoutY="266.0" onAction="#btnCheckAdminOnAction" prefHeight="27.0" prefWidth="126.0" style="-fx-background-color: Black;" text="Check Admin" textFill="WHITE">
+         <font>
+            <Font name="Impact" size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</Pane>
