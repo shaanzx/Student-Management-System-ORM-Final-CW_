@@ -10,4 +10,6 @@ public interface UserBO extends SuperBO {
     String generateNewUserId() throws Exception;
 
     boolean checkCredential(String useName, String password);
+
+    boolean checkAdmin(String adminId, String password);
 }

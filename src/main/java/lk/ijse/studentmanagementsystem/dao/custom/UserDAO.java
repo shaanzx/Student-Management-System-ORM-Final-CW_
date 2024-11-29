@@ -5,5 +5,7 @@ import lk.ijse.studentmanagementsystem.entity.User;
 
 public interface UserDAO extends CrudDAO<User, String> {
 
-    User findByUserName(String userName);
+    boolean findByUserName(String userName, String password);
+
+    boolean findByJobId(String adminId);
 }

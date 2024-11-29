@@ -30,8 +30,13 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public boolean checkCredential(String useName, String password) {
-        User user = userDAO.findByUserName(useName);
-        UserDTO userDTO = new UserDTO(
+        return userDAO.findByUserName(useName,password);
+    }
+
+    @Override
+    public boolean checkAdmin(String adminId, String password) {
+        return userDAO.findByJobId(adminId);
+     /*   UserDTO userDTO = new UserDTO(
                 user.getUserId(),
                 user.getUserRole(),
                 user.getUserEmail(),
@@ -41,7 +46,7 @@ public class UserBOImpl implements UserBO {
         if (userDTO != null) {
             return BCrypt.checkpw(password, user.getUserPassword());
         }
-        return false;
+        return false;*/
     }
 
     @Override

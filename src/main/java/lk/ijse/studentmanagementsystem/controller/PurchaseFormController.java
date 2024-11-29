@@ -227,17 +227,14 @@ public class PurchaseFormController {
             double advanceAmount = Double.parseDouble(txtAdvancePayment.getText());
             double balanceAmount = Double.parseDouble(txtCourseFeeBalance.getText());
 
-            // Get the register date from DatePicker and convert to java.sql.Date
             LocalDate localRegisterDate = dpDate.getValue();
             Date registerDate = Date.valueOf(localRegisterDate);
 
-            // Calculate expired date (3 months later)
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(registerDate);
             calendar.add(Calendar.MONTH, 3);
             Date expiredDate = new Date(calendar.getTimeInMillis());
 
-            // Create a remove button for the table
             JFXButton btnRemove = new JFXButton("Remove");
             btnRemove.setCursor(Cursor.HAND);
             btnRemove.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 14px;");
@@ -260,7 +257,6 @@ public class PurchaseFormController {
                 }
             });
 
-            // Check if the course is already added
             for (AddToCartTM item : addToCartList) {
                 if (item.getCourseId().equals(courseId)) {
                     new Alert(Alert.AlertType.WARNING, "This course is already added to the cart!").show();
@@ -268,7 +264,6 @@ public class PurchaseFormController {
                 }
             }
 
-            // Add the item to the cart
             AddToCartTM addToCartTM = new AddToCartTM(
                     purchaseId,
                     studentId,
@@ -279,7 +274,6 @@ public class PurchaseFormController {
                     registerDate,
                     expiredDate,
                     btnRemove
-                    // Set the calculated expiredDate
             );
 
             addToCartList.add(addToCartTM);
@@ -303,20 +297,17 @@ public class PurchaseFormController {
                 return;
             }
 
-            // Prepare basic details for PaymentDTO
             String purchaseId = txtPurchaseId.getText();
             Date purchaseDate = Date.valueOf(dpDate.getValue());
             double totalAmount = Double.parseDouble(txtTotalAmount.getText());
             double paymentAmount = Double.parseDouble(txtCustomerPaymentAmount.getText());
             double balanceAmount = Double.parseDouble(txtCustomerPaymentBalance.getText());
 
-            // Prepare CourseDTO and RegisterDTO lists
             List<RegisterDTO> registerDTOS = new ArrayList<>();
             List<CourseDTO> courseDTOS = new ArrayList<>();
-            Register firstRegisterDTO = null; // To hold the first RegisterDTO for PaymentDTO linking
+            Register firstRegisterDTO = null;
 
             for (AddToCartTM addToCart : addToCartList) {
-                // Search for Course
                 CourseDTO courseDTO = courseBo.searchCourse(addToCart.getCourseId());
                 if (courseDTO == null) {
                     new Alert(Alert.AlertType.WARNING, "Course not found for ID: " + addToCart.getCourseId()).show();
@@ -324,7 +315,6 @@ public class PurchaseFormController {
                 }
                 courseDTOS.add(courseDTO);
 
-                // Generate Register ID
 
 
                 // Search Register
@@ -351,7 +341,6 @@ public class PurchaseFormController {
 //                }
             }
 
-            // Create PaymentDTO and link the first RegisterDTO
             PaymentDTO paymentDTO = new PaymentDTO(
                     purchaseId,
                     purchaseDate,
@@ -361,14 +350,13 @@ public class PurchaseFormController {
                     null
             );
 
-            // Perform Transaction
             boolean isTransactionSuccessful = registerBo.addTransaction(paymentDTO, registerDTOS, courseDTOS);
 
             if (isTransactionSuccessful) {
                 new Alert(Alert.AlertType.INFORMATION, "Purchase completed successfully!").show();
                 addToCartList.clear();
                 tblAddToCart.refresh();
-                clearInputFields();// Utility method to clear inputs
+                clearInputFields();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Purchase failed! Please try again.").show();
             }
@@ -439,13 +427,11 @@ public class PurchaseFormController {
         List<RegisterDTO> registerDTOS = new ArrayList<>();
         User user = new User();
         try {
-            // Validate NIC input
             if (txtStudentNIC.getText().isEmpty()) {
                 new Alert(Alert.AlertType.WARNING, "Please enter a valid Student NIC!").show();
                 return;
             }
 
-            // Fetch the student using NIC
             StudentDTO studentDTO = studentBo.searchStudentByNic(txtStudentNIC.getText());
             if (studentDTO == null) {
                 new Alert(Alert.AlertType.WARNING, "Student not found for the given NIC!").show();
@@ -463,9 +449,7 @@ public class PurchaseFormController {
                     user
 
             );
-            // Iterate through AddToCart list and prepare RegisterDTO list
             for (AddToCartTM addToCart : addToCartList) {
-                // Generate unique register ID for each cart item
                 String registerId = registerBo.generateNextRegisterId();
 
                 CourseDTO courseDTO = courseBo.searchCourse(addToCart.getCourseId());
@@ -492,7 +476,6 @@ public class PurchaseFormController {
                 registerDTOS.add(registerDTO);
             }
 
-            // Pass the RegisterDTO list to the next step (e.g., save in database)
             boolean isRegistered = registerBo.addRegisterDetails(registerDTOS);
             if (isRegistered) {
                 new Alert(Alert.AlertType.INFORMATION, "Registration Successful!").show();
