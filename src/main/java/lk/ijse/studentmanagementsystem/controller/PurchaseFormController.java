@@ -49,7 +49,7 @@ public class PurchaseFormController {
     private Button btnAddToCart;
 
     @FXML
-    private Button btnregister;
+    private Button btnRegister;
 
     @FXML
     private Button btnBuyCourse;
@@ -370,7 +370,6 @@ public class PurchaseFormController {
 
     @FXML
     void btnClearOnAction(ActionEvent event) {
-        cmbSelectCourse.setPromptText("Select a course");
         txtCourseId.clear();
         txtCourseFee.clear();
         txtCourseDuration.clear();
